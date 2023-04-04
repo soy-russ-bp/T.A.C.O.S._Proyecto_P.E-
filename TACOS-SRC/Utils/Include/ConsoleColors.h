@@ -8,14 +8,14 @@
 //
 #define BrightFore(color) (color | FOREGROUND_INTENSITY)
 
-// Carácteres blancos.
+// Caracteres blancos.
 #define FOREGROUND_WHITE (FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE)
 
-// Carácteres blancos brillante.
+// Caracteres blancos brillante.
 #define FOREGROUND_BRIGHT_WHITE BrightFore(FOREGROUND_WHITE)
 
-// Carácteres amarillos.
+// Caracteres amarillos.
 #define FOREGROUND_YELLOW (FOREGROUND_RED | FOREGROUND_GREEN)
 
-// Carácteres amarillos brillante.
+// Caracteres amarillos brillante.
 #define FOREGROUND_BRIGHT_YELLOW BrightFore(FOREGROUND_YELLOW)

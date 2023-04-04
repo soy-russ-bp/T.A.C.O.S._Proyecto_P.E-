@@ -14,16 +14,22 @@ static void ConsoleSize_SetBufferSize(short width, short height) {
 	Assert(succeeded, "Error setting console buffer size.");
 }
 
-// Establece el tamaño de la ventana de la consola.
-static void ConsoleSize_SetWindowSize(short width, short height) {
-	SMALL_RECT window = { 0, 0, width - windowSizeOffset, height - 1 };
+// Establece el tamaño de la ventana de la consola sin agregar ningún tipo de compensación.
+static void ConsoleSize_SetWindowSizeNoOffset(short width, short height) {
+	SMALL_RECT window = { 0, 0, width, height };
 	BOOL succeeded = SetConsoleWindowInfo(ConsoleOutHandle, TRUE, &window);
 	Assert(succeeded, "Error setting console window size.");
 }
 
+// Establece el tamaño de la ventana de la consola, aplicando una compensación,
+// para que el tamaño del búfer (de la consola) coincida con la cantidad de caracteres.
+static void ConsoleSize_SetWindowSize(short width, short height) {
+	ConsoleSize_SetWindowSizeNoOffset(width - windowSizeOffset, height - 1);
+}
+
 // Llamar antes de modificar el tamaño del buffer y ventana.
 static void ConsoleSize_StartResize(void) {
-	ConsoleSize_SetWindowSize(2, 2);
+	ConsoleSize_SetWindowSizeNoOffset(1, 1);
 }
 
 void ConsoleSize_Init(void) {

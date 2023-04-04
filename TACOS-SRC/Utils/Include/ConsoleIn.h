@@ -11,7 +11,7 @@ void ConsoleIn_WaitForChar(TCHAR ch);
 // Retorna hasta que enter sea presionado.
 void ConsoleIn_WaitForEnter(void);
 
-// Tipo de función para filtrar carácteres.
+// Tipo de función para filtrar caracteres.
 // La aceptación del carácterer dependera del resultado de la función:
 // Verdadero = Aceptado. | Falso = Rechazado.
 // Se puede modificar el carácter de entrada modificando {inputChPtr}.

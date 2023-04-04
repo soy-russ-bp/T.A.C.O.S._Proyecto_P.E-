@@ -1,11 +1,11 @@
 #include "Flags.h"
 #pragma once
 // Módulo: WidePrint
-// Impresión de carácteres multibyte.
+// Impresión de caracteres multibyte.
 
 #ifdef WidePrint
 
-// Habilita la impresión de carácteres multibyte.
+// Habilita la impresión de caracteres multibyte.
 void EnableWidePrint(void);
 
 #endif
