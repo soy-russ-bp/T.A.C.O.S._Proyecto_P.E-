@@ -396,3 +396,9 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+
+## Extras
+
+# Compile Score 2022 (C/C++)
+compileData.scor.*

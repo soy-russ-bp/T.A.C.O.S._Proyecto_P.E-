@@ -24,17 +24,17 @@ static void FillLeftPanelRow(TCHAR startCh, TCHAR contentCh, TCHAR endCh) {
 }
 
 static void BlankLeftPanelRow(void) {
-	FillLeftPanelRow(_T('║'), _T(' '), _T('║'));
+	FillLeftPanelRow(L'║', ' ', L'║');
 }
 
 static void FillLeftPanelForNewOrderMenu(void) {
-	FillLeftPanelRow(_T('╔'), _T('═'), _T('╦'));
+	FillLeftPanelRow(L'╔', L'═', L'╦');
 	for (int i = 0; i < 13; i++) BlankLeftPanelRow();
 	for (int i = 0; i < 2; i++) {
-		FillLeftPanelRow(_T('╠'), _T('═'), _T('╣'));
+		FillLeftPanelRow(L'╠', L'═', L'╣');
 		BlankLeftPanelRow();
 	}
-	FillLeftPanelRow(_T('╠'), _T('═'), _T('╩'));
+	FillLeftPanelRow(L'╠', L'═', L'╩');
 }
 
 static void PrintTableDisplayRow(TCHAR wallCh, TCHAR contentCh, ConsoleStyle style) {
