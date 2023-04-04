@@ -201,4 +201,7 @@
       <Filter>Source Files\TACOS</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+  </ItemGroup>
 </Project>

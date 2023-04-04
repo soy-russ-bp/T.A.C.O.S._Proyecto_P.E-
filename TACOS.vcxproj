@@ -204,6 +204,9 @@
     <ClCompile Include="TACOS-SRC\Utils\Src\ConsoleWidePrint.c" />
     <ClCompile Include="TACOS-SRC\Utils\Src\TextLayout.c" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

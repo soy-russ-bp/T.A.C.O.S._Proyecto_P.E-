@@ -10,7 +10,7 @@
 static const TSTR MainMenuOptionsList[] = { _T("Nueva orden"), _T("Modificar orden"), _T("Finalizar orden") };
 static const OptionGroup MainMenuOptions = { StaticArrayAndLength(MainMenuOptionsList), OTExit };
 static const TSTR OrderSeparatorRow = _T("╠═════════╬═════════╬══════════════════════════════════════╣╳║                           ║");
-static const TSTR OrderEndrRow = _T("╠═════════╬═════════╬══════════════════════════════════════╣╳║                           ║");
+static const TSTR OrderEndrRow      = _T("╠═════════╩═════════╩══════════════════════════════════════╩═╩═══════════════════════════╣");
 
 static TSTR GetSeparator(size_t orderI) {
 	return (orderI == LastTableI) ? OrderEndrRow : OrderSeparatorRow;
