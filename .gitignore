@@ -401,4 +401,5 @@ FodyWeavers.xsd
 ## Extras
 
 # Compile Score 2022 (C/C++)
+compileData.scor
 compileData.scor.*
