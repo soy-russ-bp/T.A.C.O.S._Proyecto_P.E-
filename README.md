@@ -1,6 +1,6 @@
 # T.A.C.O.S._Proyecto_P.E-
 
- Para acceder al código es necesario ir a la parte de code o preferiblemente descargar el Repositorio.
+ Para acceder al código es necesario ir a la parte de code o (aquí)[https://github.com/soy-russ-bp/T.A.C.O.S._Proyecto_P.E-/tree/Revisi%C3%B3n-1/TACOS-SRC/TACOS] o preferiblemente descargar el Repositorio.
  
  ### Descarga del repositorio
 
