@@ -4,7 +4,7 @@
  
  ### Descarga del repositorio
 
-Para tener de forma local el proyecto debes de realizar una serie de acciones, empezando por copiar la url del clonado del repositorio, misma que podrás encontrar en la ventana principal del repositorio.
+Para tener de forma local el proyecto debe de realizar una serie de acciones, empezando por copiar la url del clonado del repositorio, misma que podrá encontrar en la ventana principal del repositorio.
 
 <p align="center">
     <img src="https://docs.github.com/assets/cb-88716/images/help/repository/https-url-clone-cli.png" width="300px">
