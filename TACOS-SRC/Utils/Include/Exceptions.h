@@ -29,3 +29,6 @@
 
 #define AssertIsInArrayBounds(index, size) \
     Assert(Array_IsInBounds(index, size), "Index is not in array bounds.")
+
+#define AssertNotNull(var) \
+    Assert(var != NULL, "Variable is null.")
