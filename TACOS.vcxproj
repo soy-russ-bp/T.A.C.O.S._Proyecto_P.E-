@@ -156,6 +156,7 @@
     <ClInclude Include="TACOS-SRC\TACOS\Include\Sounds.h" />
     <ClInclude Include="TACOS-SRC\TACOS\Include\SystemEnd.h" />
     <ClInclude Include="TACOS-SRC\TACOS\Include\SystemStart.h" />
+    <ClInclude Include="TACOS-SRC\TACOS\Include\TableSelection.h" />
     <ClInclude Include="TACOS-SRC\Utils\Include\AllocUtils.h" />
     <ClInclude Include="TACOS-SRC\Utils\Include\ArrayUtils.h" />
     <ClInclude Include="TACOS-SRC\Utils\Include\Beep.h" />
@@ -191,6 +192,7 @@
     <ClCompile Include="TACOS-SRC\TACOS\Src\Sounds.c" />
     <ClCompile Include="TACOS-SRC\TACOS\Src\SystemEnd.c" />
     <ClCompile Include="TACOS-SRC\TACOS\Src\SystemStart.c" />
+    <ClCompile Include="TACOS-SRC\TACOS\Src\TableSelection.c" />
     <ClCompile Include="TACOS-SRC\Utils\Src\ArrayUtils.c" />
     <ClCompile Include="TACOS-SRC\Utils\Src\CharUtils.c" />
     <ClCompile Include="TACOS-SRC\Utils\Src\ConsoleConfig.c" />

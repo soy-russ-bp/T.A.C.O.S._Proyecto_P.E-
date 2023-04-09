@@ -129,12 +129,16 @@ static TCHAR GetOptionSubmit(void) {
 }
 
 void HandleOptions(const OptionGroup* optionGroup, OptionHandler optionHandler) {
+	HandleOptionsExtra(optionGroup, optionHandler, NULL);
+}
+
+void HandleOptionsExtra(const OptionGroup* optionGroup, OptionHandler optionHandler, _Inout_opt_ void* extraInfo) {
 	PrintOptions(optionGroup);
 	Action optionAction = NULL;
 	do {
 		TCHAR option = GetOptionSubmit();
 		TSTR errorMsg = NULL;
-		bool isValidOption = optionHandler(option, &optionAction, &errorMsg);
+		bool isValidOption = optionHandler(option, &optionAction, &errorMsg, extraInfo);
 		if (isValidOption) break;
 		else PrintSubmittedInvalidOption(errorMsg);
 	} while (true);
