@@ -8,6 +8,9 @@
 //
 #define BrightFore(color) (color | FOREGROUND_INTENSITY)
 
+// Fondo blanco.
+#define BACKGROUND_WHITE (BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE)
+
 // Caracteres blancos.
 #define FOREGROUND_WHITE (FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE)
 
