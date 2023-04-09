@@ -59,10 +59,11 @@ static void PrintTableNum(COORD tablePos, size_t tableNum) {
 	ConsoleOut_WriteFormat(_T("0%d"), (int)tableNum);
 }
 
-static void PrintTable(COORD tablePos, size_t tableNum) {
+static void PrintTable(COORD tablePos, size_t tableNum, bool onlyOccupied) {
+	Table* table = Orders_GetTableByNum(tableNum);
+	if (!Orders_IsTableOccupied(table)) return;
 	ConsoleCursor_SetPos(tablePos);
 	PrintTableDisplayRowT1();
-	Table* table = Orders_GetTableByNum(tableNum);
 	ConsoleStyle tableColor = Orders_GetTableStatusColor(table);
 	for (int i = 0; i < 2; i++) {
 		tablePos.Y++;
@@ -75,19 +76,18 @@ static void PrintTable(COORD tablePos, size_t tableNum) {
 	PrintTableNum(tablePos, tableNum);
 }
 
-static void PrintTableRow(COORD rowPos, size_t tableStartNum) {
+static void PrintTableRow(COORD rowPos, size_t tableStartNum, bool onlyOccupied) {
+	size_t tableNum = tableStartNum;
 	for (int i = 0; i < 4; i++) {
-		PrintTable(rowPos, tableStartNum++);
+		PrintTable(rowPos, tableNum++, onlyOccupied);
 		rowPos.X += 10 + 4;
 	}
 }
 
 static void PrintNewOrderMenu(void) {
-	ConsoleCursor_ResetPos();
-	FillLeftPanelForNewOrderMenu();
-	PrintTableRow(Row1TablesPos, 1);
-	PrintTableRow(Row2TablesPos, 5);
+	PrintTablesStatusPanel(true);
 }
+
 static COORD GetTableRowPos(int tableNum) {
 	return (tableNum <= 4) ? Row1TablesPos : Row2TablesPos;
 }
@@ -133,6 +133,13 @@ static bool NewOrderOptionHandler(OptionHandlerArgs) {
 	}
 	if (option == 'R') return true;
 	return false;
+}
+
+void PrintTablesStatusPanel(bool onlyOccupied) {
+	ConsoleCursor_ResetPos();
+	FillLeftPanelForNewOrderMenu();
+	PrintTableRow(Row1TablesPos, 1, onlyOccupied);
+	PrintTableRow(Row2TablesPos, 5, onlyOccupied);
 }
 
 void NewOrder_Menu(void) {
