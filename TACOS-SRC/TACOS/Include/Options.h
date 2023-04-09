@@ -21,10 +21,13 @@ typedef struct {
 typedef void(*Action)(void);
 
 // TODO
-#define OptionHandlerArgs TCHAR option, Action* action, TSTR* errorMsg
+#define OptionHandlerArgs TCHAR option, Action* action, TSTR* errorMsg, void* extraInfo
 
 // TODO
 typedef bool(OptionHandler)(OptionHandlerArgs);
 
 // TODO
 void HandleOptions(const OptionGroup* optionGroup, OptionHandler optionHandler);
+
+// TODO
+void HandleOptionsExtra(const OptionGroup* optionGroup, OptionHandler optionHandler, _Inout_opt_ void* extraInfo);

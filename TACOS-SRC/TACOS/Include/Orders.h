@@ -32,4 +32,7 @@ ConsoleStyle Orders_GetTableStatusColor(_In_ Table* table);
 
 // Trata de asignar una mesa, abriendo una nueva orden.
 // La asignación será exitosa cuando tableNum sea un número de mesa valido y esta no este ocupada.
-bool Orders_TryAssignTable(size_t tableNum, _Outptr_result_maybenull_z_ TSTR* errorMsg);
+_Success_(OnFalseReturn) bool Orders_TryAssignTable(size_t tableNum, _Outptr_result_maybenull_z_ TSTR* errorMsg);
+
+// Determina si el número de mesa se refiere a una ocupada.
+_Success_(OnFalseReturn) bool Orders_IsValidAndOccupied(size_t tableNum, _Outptr_result_maybenull_z_ TSTR* errorMsg);
