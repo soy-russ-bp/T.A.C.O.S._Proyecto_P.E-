@@ -1,6 +1,7 @@
 ﻿#include "Flags.h"
 #pragma once
 #include "StringMap.h"
+#include "Action.h"
 
 // Tipo de opción.
 // TODO: Documentar tipos
@@ -16,9 +17,6 @@ typedef struct {
 	const int optionCount;
 	const OptionType optionType;
 } OptionGroup;
-
-// Tipo de función sin retorno y sin argumentos.
-typedef void(*Action)(void);
 
 // TODO
 #define OptionHandlerArgs TCHAR option, Action* action, TSTR* errorMsg, void* extraInfo

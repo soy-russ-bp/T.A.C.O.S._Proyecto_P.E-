@@ -138,6 +138,9 @@
     <ClInclude Include="TACOS-SRC\TACOS\Include\TableSelection.h">
       <Filter>Header Files\TACOS</Filter>
     </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\Action.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TACOS-SRC\TACOS\Src\Main.c">
@@ -205,6 +208,9 @@
     </ClCompile>
     <ClCompile Include="TACOS-SRC\TACOS\Src\TableSelection.c">
       <Filter>Source Files\TACOS</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\Utils\Src\Action.c">
+      <Filter>Source Files\Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
