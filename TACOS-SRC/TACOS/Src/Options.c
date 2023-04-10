@@ -143,5 +143,5 @@ void HandleOptionsExtra(const OptionGroup* optionGroup, OptionHandler optionHand
 		else PrintSubmittedInvalidOption(errorMsg);
 	} while (true);
 	ConsoleOut_Backspace();
-	if (optionAction != NULL) optionAction();
+	Action_TryExecute(optionAction);
 }
