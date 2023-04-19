@@ -173,6 +173,7 @@
     <ClInclude Include="TACOS-SRC\Utils\Include\Flags.h" />
     <ClInclude Include="TACOS-SRC\Utils\Include\GlobalDefines.h" />
     <ClInclude Include="TACOS-SRC\Utils\Include\GlobalIncludes.h" />
+    <ClInclude Include="TACOS-SRC\Utils\Include\LinkedList.h" />
     <ClInclude Include="TACOS-SRC\Utils\Include\MacroUtils.h" />
     <ClInclude Include="TACOS-SRC\Utils\Include\MathUtils.h" />
     <ClInclude Include="TACOS-SRC\Utils\Include\MsgBox.h" />
