@@ -75,9 +75,9 @@ typedef struct LLNodeName {
 // M2 - LL_Node - tail  - Ultimo elemento de la lista.
 // M3 - size_t  - count - Cantidad de elementos en la lista.
 typedef struct {
+	size_t count;
 	LLNodeName* head;
 	LLNodeName* tail;
-	size_t count;
 } LLName;
 
 // Uso interno. Asigna memoria a un nodo.
@@ -122,7 +122,9 @@ void LLCwRotateFName(_In_ LLName* list);
 LLNodeName* LLAllocNodeFName(GTYPE data) {
 	LLNodeName* newNode;
 	CheckedMalloc(newNode, sizeof(LLNodeName));
-	*newNode = (LLNodeName){ data, NULL, NULL };
+	memcpy(&newNode->data, &data, sizeof(GTYPE));
+	newNode->next = NULL;
+	newNode->last = NULL;
 	return newNode;
 }
 
@@ -146,7 +148,7 @@ void LLUpdateTailFName(_In_ LLName* list, LLNodeName* newTail) {
 LLName* LLNewFName(void) {
 	LLName* head;
 	CheckedMalloc(head, sizeof(LLName));
-	*head = (LLName){ NULL, NULL, 0 };
+	*head = (LLName){ 0, NULL, NULL };
 	return head;
 }
 
