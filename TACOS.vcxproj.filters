@@ -141,6 +141,9 @@
     <ClInclude Include="TACOS-SRC\Utils\Include\Action.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\LinkedList.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TACOS-SRC\TACOS\Src\Main.c">
