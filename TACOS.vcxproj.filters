@@ -45,9 +45,6 @@
     <ClInclude Include="TACOS-SRC\TACOS\Include\SystemStart.h">
       <Filter>Header Files\TACOS</Filter>
     </ClInclude>
-    <ClInclude Include="TACOS-SRC\Utils\Include\AllocUtils.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="TACOS-SRC\Utils\Include\CharUtils.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
@@ -142,6 +139,9 @@
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="TACOS-SRC\Utils\Include\LinkedList.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\MemUtils.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>

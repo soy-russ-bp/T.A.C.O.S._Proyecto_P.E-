@@ -158,7 +158,6 @@
     <ClInclude Include="TACOS-SRC\TACOS\Include\SystemStart.h" />
     <ClInclude Include="TACOS-SRC\TACOS\Include\TableSelection.h" />
     <ClInclude Include="TACOS-SRC\Utils\Include\Action.h" />
-    <ClInclude Include="TACOS-SRC\Utils\Include\AllocUtils.h" />
     <ClInclude Include="TACOS-SRC\Utils\Include\ArrayUtils.h" />
     <ClInclude Include="TACOS-SRC\Utils\Include\Beep.h" />
     <ClInclude Include="TACOS-SRC\Utils\Include\CharUtils.h" />
@@ -176,6 +175,7 @@
     <ClInclude Include="TACOS-SRC\Utils\Include\LinkedList.h" />
     <ClInclude Include="TACOS-SRC\Utils\Include\MacroUtils.h" />
     <ClInclude Include="TACOS-SRC\Utils\Include\MathUtils.h" />
+    <ClInclude Include="TACOS-SRC\Utils\Include\MemUtils.h" />
     <ClInclude Include="TACOS-SRC\Utils\Include\MsgBox.h" />
     <ClInclude Include="TACOS-SRC\Utils\Include\SalExt.h" />
     <ClInclude Include="TACOS-SRC\Utils\Include\Sleep.h" />

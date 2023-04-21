@@ -1,13 +1,13 @@
-//#define LinkedListTest
-//#include "LinkedList.h"
-#include "AllocUtils.h"
+#define LinkedListTest
+#include "LinkedList.h"
+#include "MemUtils.h"
 
 #ifdef GDEF
 
 LLNodeName* LLAllocNodeFName(GTYPE data) {
 	LLNodeName* newNode;
 	CheckedMalloc(newNode, sizeof(LLNodeName));
-	memcpy_s(&newNode->data, sizeof(newNode->data), &data, sizeof(data));
+	CheckedCopy(newNode->data, data);
 	newNode->next = NULL;
 	newNode->last = NULL;
 	return newNode;
