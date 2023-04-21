@@ -55,7 +55,6 @@
 #define LLRemoveAtFName AddLLPrefix(RemoveAt)
 #define LLCwRotateFName AddLLPrefix(CwRotate)
 
-#pragma warning( disable : 4820 )
 // Nodo de una lista enlazada.
 // M1 - GTYPE  - data - Datos del elemento.
 // M2 - LL{GTYPE}Node - next - Siguiente elemento de la lista.
@@ -64,7 +63,6 @@ typedef struct LLNodeName {
 	struct LLNodeName* next;
 	struct LLNodeName* last;
 } LLNodeName;
-#pragma warning( default : 4820 )
 
 // Lista enlazada.
 // No modificar directamente, usar los metodos de tipo LL_FUNC.
@@ -117,6 +115,6 @@ void LLRemoveAtFName(_In_ LLName* list, size_t index);
 // Mueve el último elemento al principio de la lista.
 void LLCwRotateFName(_In_ LLName* list);
 
-#else
+#elif !defined(__clang_analyzer__)
 #error Define GDEC or GDEF
 #endif
