@@ -204,6 +204,7 @@
     <ClCompile Include="TACOS-SRC\Utils\Src\ConsoleOut.c" />
     <ClCompile Include="TACOS-SRC\Utils\Src\ConsoleSize.c" />
     <ClCompile Include="TACOS-SRC\Utils\Src\ConsoleStyle.c" />
+    <ClCompile Include="TACOS-SRC\Utils\Src\LinkedList.c" />
     <ClCompile Include="TACOS-SRC\Utils\Src\MathUtils.c" />
     <ClCompile Include="TACOS-SRC\Utils\Src\MsgBox.c" />
     <ClCompile Include="TACOS-SRC\Utils\Src\ConsoleWidePrint.c" />
