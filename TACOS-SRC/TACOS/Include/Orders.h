@@ -8,11 +8,28 @@
 #define TableOccupiedColor BACKGROUND_RED
 #define TableAvailableColor BACKGROUND_GREEN
 
+// Info de un producto del restaurante.
+typedef struct {
+	const TSTR name;
+	const double price;
+} Product;
+
+// Elemento de una orden.
+typedef struct {
+	Product product;
+	size_t count;
+} OrderElement;
+
+#define GDEC
+#define GTYPE OrderElement
+#define GNAME Order
+#include "LinkedList.h"
+
 // Información de una mesa.
 typedef struct {
 	UINT id;
 	float moneySpent;
-	//int* foodList; // TODO: Remplazar tipo por lista de alimentos
+	LLOrder* orderList;
 } Table;
 
 // Obtiene la cantidad de ordenes abiertas actualmente.

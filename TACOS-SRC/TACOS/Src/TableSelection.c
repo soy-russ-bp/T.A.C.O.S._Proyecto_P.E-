@@ -2,7 +2,7 @@
 #include <wincontypes.h>
 #include "StringMap.h"
 #include "ArrayUtils.h"
-#include "MacroUtils.h"
+#include "WarnIgnore.h"
 #include "Exceptions.h"
 #include "CharUtils.h"
 #include "ConsoleOut.h"
@@ -19,10 +19,12 @@ static const COORD Row1TablesPos = { 4, 2 };
 static const COORD Row2TablesPos = { 4, 2 + 6 };
 #define TableAvailabilityDisplayLen 8
 
+WarnIgnore_AddedPadding_S
 typedef struct {
 	_In_ bool onlyOccupied;
 	_Out_ int selected;
 } TableSelectionInfo;
+WarnIgnore_AddedPadding_E
 
 static void FillLeftPanelRow(TCHAR startCh, TCHAR contentCh, TCHAR endCh) {
 	ConsoleOut_WriteChar(startCh);
@@ -135,7 +137,7 @@ static void GetValidatorAndSelectStyle(bool onlyOccupied, _Out_ TableNumValidato
 }
 
 static bool TableSelectionOptionHandler(OptionHandlerArgs) {
-	IgnoreUnused(action);
+	WarnIgnore_UnusedVar(action);
 	TableSelectionInfo* selectionInfo = ((TableSelectionInfo*)extraInfo);
 	AssertNotNull(selectionInfo);
 	{

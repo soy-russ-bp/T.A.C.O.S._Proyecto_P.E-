@@ -141,6 +141,15 @@
     <ClInclude Include="TACOS-SRC\Utils\Include\Action.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\LinkedList.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\MemUtils.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\WarnIgnore.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TACOS-SRC\TACOS\Src\Main.c">
@@ -212,8 +221,12 @@
     <ClCompile Include="TACOS-SRC\Utils\Src\Action.c">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="TACOS-SRC\Utils\Src\LinkedList.c">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

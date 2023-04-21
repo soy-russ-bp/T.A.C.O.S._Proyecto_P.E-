@@ -7,7 +7,7 @@
 #include "NewOrder.h"
 #include "ModifyOrderP1.h"
 #include "SystemEnd.h"
-#include "MacroUtils.h"
+#include "WarnIgnore.h"
 
 static const TSTR MainMenuOptionsList[] = { _T("Nueva orden"), _T("Modificar orden"), _T("Finalizar orden") };
 static const OptionGroup MainMenuOptions = { StaticArrayAndLength(MainMenuOptionsList), OTExit };
