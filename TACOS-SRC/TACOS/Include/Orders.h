@@ -20,7 +20,7 @@ typedef struct {
 	size_t count;
 } OrderElement;
 
-#define GDEF
+#define GDEC
 #define GTYPE OrderElement
 #define GNAME Order
 #include "LinkedList.h"

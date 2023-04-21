@@ -183,6 +183,7 @@
     <ClInclude Include="TACOS-SRC\Utils\Include\SysArch.h" />
     <ClInclude Include="TACOS-SRC\Utils\Include\ConsoleWidePrint.h" />
     <ClInclude Include="TACOS-SRC\Utils\Include\TextLayout.h" />
+    <ClInclude Include="TACOS-SRC\Utils\Include\WarnIgnore.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TACOS-SRC\TACOS\Src\Logo.c" />
