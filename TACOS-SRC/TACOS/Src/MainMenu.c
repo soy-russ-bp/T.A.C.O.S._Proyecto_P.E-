@@ -5,7 +5,7 @@
 #include "Orders.h"
 #include "Options.h"
 #include "NewOrder.h"
-#include "ModificarOrden.h"
+#include "ModifyOrderP1.h"
 #include "SystemEnd.h"
 #include "MacroUtils.h"
 
@@ -56,13 +56,16 @@ static void PrintMainMenu(void) {
 }
 
 static bool MainMenuOptionHandler(OptionHandlerArgs) {
-	IgnoreUnused(errorMsg);
 	IgnoreUnused(extraInfo);
 	switch (option) {
 		case 'N':
 			*action = &NewOrder_Menu;
 			return true;
 		case 'M':
+			if (Orders_GetOpenCount() == 0) {
+				*errorMsg = _T("No hay mesas abiertas");
+				return false;
+			}
 			*action = &ModifyOrder_Menu;
 			return true;
 		case 'F':
