@@ -6,7 +6,7 @@
 #include "Options.h"
 #include "NewOrder.h"
 #include "SystemEnd.h"
-#include "MacroUtils.h"
+#include "WarnIgnore.h"
 
 static const TSTR MainMenuOptionsList[] = { _T("Nueva orden"), _T("Modificar orden"), _T("Finalizar orden") };
 static const OptionGroup MainMenuOptions = { StaticArrayAndLength(MainMenuOptionsList), OTExit };
@@ -55,8 +55,8 @@ static void PrintMainMenu(void) {
 }
 
 static bool MainMenuOptionHandler(OptionHandlerArgs) {
-	IgnoreUnused(errorMsg);
-	IgnoreUnused(extraInfo);
+	WarnIgnore_UnusedVar(errorMsg);
+	WarnIgnore_UnusedVar(extraInfo);
 	switch (option) {
 		case 'N':
 			*action = &NewOrder_Menu;

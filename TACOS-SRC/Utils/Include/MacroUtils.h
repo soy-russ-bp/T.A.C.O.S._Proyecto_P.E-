@@ -8,5 +8,3 @@
 
 #define P_TCONCAT(T1, T2) T1 ## T2
 #define TCONCAT(T1, T2) P_TCONCAT(T1, T2)
-
-#define IgnoreUnused(var) (void)(var)
