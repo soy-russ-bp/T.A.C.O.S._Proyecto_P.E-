@@ -21,8 +21,8 @@ static const COORD Row2TablesPos = { 4, 2 + 6 };
 
 WarnIgnore_AddedPadding_S
 typedef struct {
-	_Out_ int selected;
 	_In_ bool onlyOccupied;
+	_Out_ int selected;
 } TableSelectionInfo;
 WarnIgnore_AddedPadding_E
 
