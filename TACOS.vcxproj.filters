@@ -215,6 +215,9 @@
     <ClCompile Include="TACOS-SRC\Utils\Src\Action.c">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="TACOS-SRC\Utils\Src\LinkedList.c">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
