@@ -1,23 +1,24 @@
 #include "Flags.h"
-// Módulo: LinkedList.c
-// Implementación generica de lista enlazada
-// Definir GTYPE y GNAME para crear una variante de un tipo en concreto
+// Módulo: LinkedList.h
+// Implementación generica de lista enlazada.
+// Definir GDEC or GDEF: GDEC en el .h y GDEF en el .c.
+// Si se trata de GDEC: definir GTYPE y GNAME para generar una variante de un tipo en concreto.
 
-#ifdef LinkedListTest
+#if defined(GDEF)
 
 #undef GDEF
 #undef GTYPE
 #undef GNAME
-#define GDEF
-#define GTYPE int
-#define GNAME Int
-#define LinkedListTesting
 
-#endif
+#define LinkedListIgnoreEdit
 
-#ifndef LinkedListTested
+#pragma warning( disable : 4464 )
+#include "../Src/LinkedList.c"
+#pragma warning( default : 4464 )
 
-#ifdef GDEF
+#elif defined(GDEC)
+
+#undef GDEC
 
 #ifndef GTYPE
 #error Define GTYPE
@@ -63,7 +64,7 @@ typedef struct LLNodeName {
 	struct LLNodeName* next;
 	struct LLNodeName* last;
 } LLNodeName;
-#pragma warning( default : 4820 ) 
+#pragma warning( default : 4820 )
 
 // Lista enlazada.
 // No modificar directamente, usar los metodos de tipo LL_FUNC.
@@ -116,10 +117,6 @@ void LLRemoveAtFName(_In_ LLName* list, size_t index);
 // Mueve el último elemento al principio de la lista.
 void LLCwRotateFName(_In_ LLName* list);
 
-#ifdef LinkedListTesting
-#define LinkedListTested
-#endif
-
-#endif
-
+#else
+#error Define GDEC or GDEF
 #endif

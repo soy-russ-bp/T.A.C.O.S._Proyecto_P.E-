@@ -1,5 +1,14 @@
-#define LinkedListTest
+//#define LinkedListEdit
+
+#if defined(LinkedListEdit) && !defined(LinkedListIgnoreEdit)
+#pragma message ( "LinkedList edit mode enabled!" )
+#define GDEC
+#define GTYPE int
+#define GNAME Int
 #include "LinkedList.h"
+#define GDEF
+#endif
+
 #include "MemUtils.h"
 
 #ifdef GDEF

@@ -1,5 +1,6 @@
 #include "Orders.h"
-#include "../Src/LinkedList.c"
+#define GDEF
+#include "LinkedList.h"
 #include "ConsoleColors.h"
 #include "Exceptions.h"
 #include "MathUtils.h"
