@@ -56,7 +56,7 @@ static void PrintMainMenu(void) {
 }
 
 static bool MainMenuOptionHandler(OptionHandlerArgs) {
-	IgnoreUnused(extraInfo);
+	WarnIgnore_UnusedVar(extraInfo);
 	switch (option) {
 		case 'N':
 			*action = &NewOrder_Menu;
