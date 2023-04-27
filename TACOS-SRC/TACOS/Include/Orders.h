@@ -32,6 +32,9 @@ typedef struct {
 	LLOrder* orderList;
 } Table;
 
+// Obtiene la cantidad de ordenes abiertas actualmente.
+UINT Orders_GetOpenCount(void);
+
 // Obtiene la mesa en base a su indice.
 Table* Orders_GetTableByIndex(size_t tableI);
 

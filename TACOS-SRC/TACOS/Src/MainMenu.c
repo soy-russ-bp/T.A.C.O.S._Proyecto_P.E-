@@ -5,6 +5,7 @@
 #include "Orders.h"
 #include "Options.h"
 #include "NewOrder.h"
+#include "ModifyOrderP1.h"
 #include "SystemEnd.h"
 #include "WarnIgnore.h"
 
@@ -55,14 +56,17 @@ static void PrintMainMenu(void) {
 }
 
 static bool MainMenuOptionHandler(OptionHandlerArgs) {
-	WarnIgnore_UnusedVar(errorMsg);
 	WarnIgnore_UnusedVar(extraInfo);
 	switch (option) {
 		case 'N':
 			*action = &NewOrder_Menu;
 			return true;
 		case 'M':
-			// TODO
+			if (Orders_GetOpenCount() == 0) {
+				*errorMsg = _T("No hay mesas abiertas");
+				return false;
+			}
+			*action = &ModifyOrder_Menu;
 			return true;
 		case 'F':
 			// TODO
