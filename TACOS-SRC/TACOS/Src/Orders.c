@@ -6,10 +6,17 @@
 #include "MathUtils.h"
 
 // Total de ordenes que se han abierto.
-static UINT OrderCount;
+static UINT TotalOrderCount;
+
+// Cantidad de ordenes abiertas actualmente.
+static UINT OpenOrderCount;
 
 // Arreglo de las mesas.
 static Table Tables[TableCount];
+
+UINT Orders_GetOpenCount(void) {
+	return OpenOrderCount;
+}
 
 Table* Orders_GetTableByIndex(size_t tableI) {
 	AssertIsInArrayBounds(tableI, TableCount);
@@ -46,7 +53,8 @@ _Success_(OnFalseReturn) bool Orders_TryAssignTable(size_t tableNum, _Outptr_res
 		*errorMsg = OccupiedTableMsg;
 		return false;
 	}
-	table->id = ++OrderCount;
+	table->id = ++TotalOrderCount;
+	OpenOrderCount++;
 	return true;
 }
 
