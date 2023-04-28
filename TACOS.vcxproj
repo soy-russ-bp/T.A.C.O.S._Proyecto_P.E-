@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="TACOS-SRC\TACOS\Include\CloseOrder.h" />
     <ClInclude Include="TACOS-SRC\TACOS\Include\Logo.h" />
     <ClInclude Include="TACOS-SRC\TACOS\Include\Main.h" />
     <ClInclude Include="TACOS-SRC\TACOS\Include\MainMenu.h" />
@@ -189,6 +190,7 @@
     <ClInclude Include="TACOS-SRC\Utils\Include\WarnIgnore.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="TACOS-SRC\TACOS\Src\CloseOrder.c" />
     <ClCompile Include="TACOS-SRC\TACOS\Src\Logo.c" />
     <ClCompile Include="TACOS-SRC\TACOS\Src\Main.c" />
     <ClCompile Include="TACOS-SRC\TACOS\Src\MainMenu.c" />

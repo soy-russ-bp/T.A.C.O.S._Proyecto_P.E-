@@ -150,6 +150,15 @@
     <ClInclude Include="TACOS-SRC\Utils\Include\WarnIgnore.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="TACOS-SRC\TACOS\Include\ModifyOrderP1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\TACOS\Include\ModifyOrderP2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\TACOS\Include\CloseOrder.h">
+      <Filter>Header Files\TACOS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TACOS-SRC\TACOS\Src\Main.c">
@@ -223,6 +232,15 @@
     </ClCompile>
     <ClCompile Include="TACOS-SRC\Utils\Src\LinkedList.c">
       <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\TACOS\Src\ModifyOrderP1.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\TACOS\Src\ModifyOrderP2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\TACOS\Src\CloseOrder.c">
+      <Filter>Source Files\TACOS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -6,13 +6,14 @@
 #include "Options.h"
 #include "NewOrder.h"
 #include "ModifyOrderP1.h"
+#include "CloseOrder.h"
 #include "SystemEnd.h"
 #include "WarnIgnore.h"
 
 static const TSTR MainMenuOptionsList[] = { _T("Nueva orden"), _T("Modificar orden"), _T("Finalizar orden") };
 static const OptionGroup MainMenuOptions = { StaticArrayAndLength(MainMenuOptionsList), OTExit };
 static const TSTR OrderSeparatorRow = _T("╠═════════╬═════════╬══════════════════════════════════════╣╳║                           ║");
-static const TSTR OrderEndrRow      = _T("╠═════════╩═════════╩══════════════════════════════════════╩═╩═══════════════════════════╣");
+static const TSTR OrderEndrRow = _T("╠═════════╩═════════╩══════════════════════════════════════╩═╩═══════════════════════════╣");
 
 static TSTR GetSeparator(size_t orderI) {
 	return (orderI == LastTableI) ? OrderEndrRow : OrderSeparatorRow;
@@ -61,15 +62,12 @@ static bool MainMenuOptionHandler(OptionHandlerArgs) {
 		case 'N':
 			*action = &NewOrder_Menu;
 			return true;
-		case 'M':
+		case 'M': case 'F':
 			if (Orders_GetOpenCount() == 0) {
 				*errorMsg = _T("No hay mesas abiertas");
 				return false;
 			}
-			*action = &ModifyOrder_Menu;
-			return true;
-		case 'F':
-			// TODO
+			*action = (option == 'M') ? &ModifyOrder_Menu : &CloseOrder_Menu;
 			return true;
 		case 'S':
 			SystemEnd();
@@ -79,7 +77,6 @@ static bool MainMenuOptionHandler(OptionHandlerArgs) {
 
 _Noreturn void MainMenu(void) {
 	do {
-		// TODO: Imprimir solo el panel izquierdo
 		PrintMainMenu();
 		HandleOptions(&MainMenuOptions, MainMenuOptionHandler);
 		ConsoleOut_NewLineRepeat(2);
