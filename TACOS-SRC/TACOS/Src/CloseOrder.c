@@ -4,6 +4,7 @@
 #include "ConsoleOut.h"
 #include "ConsoleCursor.h"
 #include "Sleep.h"
+#include "WarnIgnore.h"
 #include "Options.h"
 
 // TODO
@@ -13,17 +14,21 @@ static const OptionGroup CloseOrderOptions = { StaticArrayAndLength(CloseOrderMe
 static bool CloseOrderOptionHandler(OptionHandlerArgs) {
 	// TODO
 	// OptionHandlerArgs: TCHAR option, Action* action, TSTR* errorMsg, void* extraInfo
+	WarnIgnore_UnusedVar(option);
+	WarnIgnore_UnusedVar(action);
+	WarnIgnore_UnusedVar(extraInfo);
+	// ---
 	*errorMsg = _T("Por implementar");
 	return false;
 }
 
-static void PrintCloseOrderMenu() {
+static void PrintCloseOrderMenu(void) {
 	// TODO
 	ConsoleCursor_ResetPos();
 	ConsoleOut_Write(_T("TEST"));
 }
 
-void CloseOrder_Menu() {
+void CloseOrder_Menu(void) {
 	// TODO
 	PrintCloseOrderMenu();
 	HandleOptions(&CloseOrderOptions, CloseOrderOptionHandler);
