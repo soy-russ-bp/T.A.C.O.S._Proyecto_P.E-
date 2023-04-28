@@ -2,4 +2,6 @@
 #pragma once
 
 #define WidePrint
-//#define NoBeep
+#ifdef _DEBUG
+#define NoBeep
+#endif
