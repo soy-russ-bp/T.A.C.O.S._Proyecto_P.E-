@@ -28,6 +28,13 @@ void ConsoleOut_WriteCharRepeat(TCHAR ch, size_t repeatCount) {
 	while (repeatCount--) ConsoleOut_WriteChar(ch);
 }
 
+void ConsoleOut_WriteCharRepeatStyled(TCHAR ch, size_t repeatCount, ConsoleStyle style) {
+	ConsoleStyle oldStyle = ConsoleStyle_Get();
+	ConsoleStyle_Set(style);
+	ConsoleOut_WriteCharRepeat(ch, repeatCount);
+	ConsoleStyle_Set(oldStyle);
+}
+
 void ConsoleOut_WriteUInt(UINT num) {
 	ConsoleOut_WriteFormat(_T("%u"), num);
 }
