@@ -9,6 +9,7 @@
 #include "Sleep.h"
 
 #define Max_Options 5
+#define OptionMaxLen 19
 #define OPT_AREA_X 62
 #define OPT_AREA_Y 4
 static const TSTR InvalidOptionMsg = _T("Opción invalida");
@@ -52,11 +53,17 @@ static void GetOptionGroupOptionDisplay(_Out_ TCHAR* ch, _Inout_ TSTR* text) {
 	}
 }
 
+static void ClearLastOptionLinePrint(TSTR option) {
+	size_t lenToClear = OptionMaxLen - TStrLen(option);
+	ConsoleOut_WriteCharRepeatStyled(' ', lenToClear, FOREGROUND_WHITE);
+}
+
 static void PrintOptionGroupOptionLine(TSTR option, COORD pos) {
 	ConsoleCursor_SetPos(pos);
 	TCHAR ch;
 	GetOptionGroupOptionDisplay(&ch, &option);
 	ConsoleOut_WriteFormat(_T(" %c - %s "), ch, option);
+	ClearLastOptionLinePrint(option);
 }
 
 static TSTR TryGetOptionGroupTypeOption(OptionType optionType) {

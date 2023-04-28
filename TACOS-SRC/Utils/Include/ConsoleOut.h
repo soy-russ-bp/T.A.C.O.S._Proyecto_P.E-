@@ -25,6 +25,9 @@ void ConsoleOut_WriteChar(TCHAR ch);
 // Imprime un carácter en la consola la cantidad de veces indicada.
 void ConsoleOut_WriteCharRepeat(TCHAR ch, size_t repeatCount);
 
+// Imprime un carácter en la consola la cantidad de veces indicada y con el estilo especificado.
+void ConsoleOut_WriteCharRepeatStyled(TCHAR ch, size_t repeatCount, ConsoleStyle style);
+
 // Imprime un entero positivo en la consola.
 void ConsoleOut_WriteUInt(UINT num);
 
