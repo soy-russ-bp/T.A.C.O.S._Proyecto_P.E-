@@ -16,6 +16,7 @@ void ConsoleCursor_SetPos2(SHORT x, SHORT y) {
 }
 
 void ConsoleCursor_MoveX(SHORT xOffset) {
+	if (xOffset == 0) return;
 	COORD currentPos = ConsoleCursor_GetPos();
 	ConsoleCursor_SetPos2(currentPos.X + xOffset, currentPos.Y);
 }
