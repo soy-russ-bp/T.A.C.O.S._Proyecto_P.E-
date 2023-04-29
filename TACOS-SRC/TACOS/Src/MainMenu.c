@@ -5,7 +5,7 @@
 #include "Orders.h"
 #include "Options.h"
 #include "NewOrder.h"
-#include "ModifyOrderP1.h"
+#include "ModifyOrder.h"
 #include "CloseOrder.h"
 #include "SystemEnd.h"
 #include "WarnIgnore.h"
