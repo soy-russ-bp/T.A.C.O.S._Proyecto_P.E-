@@ -1,19 +1,20 @@
 ﻿#include "MainMenu.h"
 #include "Sleep.h"
 #include "ArrayUtils.h"
+#include "WarnIgnore.h"
 #include "ConsoleOut.h"
 #include "Orders.h"
 #include "Options.h"
 #include "NewOrder.h"
 #include "ModifyOrder.h"
 #include "CloseOrder.h"
+#include "DaySummary.h"
 #include "SystemEnd.h"
-#include "WarnIgnore.h"
 
 static const TSTR MainMenuOptionsList[] = { _T("Nueva orden"), _T("Modificar orden"), _T("Finalizar orden") };
 static const OptionGroup MainMenuOptions = { StaticArrayAndLength(MainMenuOptionsList), OTExit };
 static const TSTR OrderSeparatorRow = _T("╠═════════╬═════════╬══════════════════════════════════════╣╳║                           ║");
-static const TSTR OrderEndrRow = _T("╠═════════╩═════════╩══════════════════════════════════════╩═╩═══════════════════════════╣");
+static const TSTR OrderEndrRow      = _T("╠═════════╩═════════╩══════════════════════════════════════╩═╩═══════════════════════════╣");
 
 static TSTR GetSeparator(size_t orderI) {
 	return (orderI == LastTableI) ? OrderEndrRow : OrderSeparatorRow;
@@ -24,7 +25,7 @@ static void PrintOrderInfo(size_t orderI) {
 	ConsoleOut_WriteFormat(_T("║    %d    ║"), rowNum);
 	Table* table = Orders_GetTableByIndex(orderI);
 	if (Orders_IsTableOccupied(table)) {
-		ConsoleOut_WriteCenteredUInt(table->id, 9);
+		ConsoleOut_WriteAlignedUInt(table->id, 9, ALIGN_CENTER);
 		ConsoleOut_WriteLine(_T("║  Consumo: $0000.00  /  Cant art: 00  ║╳║                           ║"));
 	} else {
 		ConsoleOut_WriteLine(_T("▒▒▒▒▒▒▒▒▒║▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒║╳║                           ║"));
@@ -38,22 +39,16 @@ static void PrintOrders(void) {
 	}
 }
 
-static void PrintMainMenu(void) {
+static void PrintMainMenuHeader(void) {
 	ConsoleOut_WriteLine(_T("╔═════════╦═════════╦══════════════════════════════════════╦═╦═══════════════════════════╗"));
 	ConsoleOut_WriteLine(_T("║   Mesa  ║  Orden  ║              Información             ║╳║          Opciones         ║"));
 	ConsoleOut_WriteLine(_T("╠═════════╬═════════╬══════════════════════════════════════╣╳╠═══════════════════════════╣"));
+}
+
+static void PrintMainMenu(void) {
+	PrintMainMenuHeader();
 	PrintOrders();
-	ConsoleOut_WriteLine(_T("╠════════════════════════════════════════════════════════════════════════════════════════╣"));
-	ConsoleOut_WriteLine(_T("║                                     Resumen del día                                    ║"));
-	ConsoleOut_WriteLine(_T("╠═══════════════════════════════════════════╦╦═══════════════════════════════════════════╣"));
-	ConsoleOut_WriteLine(_T("║                  Ingresos                 ║║                  Ordenes                  ║"));
-	ConsoleOut_WriteLine(_T("╠═══════════════════════════════════════════╣╠═══════════════════════════════════════════╣"));
-	ConsoleOut_WriteLine(_T("║ Subtotal: $0                              ║║ Abiertas: 0                               ║"));
-	ConsoleOut_WriteLine(_T("║  Propina: $0                              ║║ Cerradas: 0                               ║"));
-	ConsoleOut_WriteLine(_T("║    Total: $0                              ║║  Totales: 0                               ║"));
-	ConsoleOut_WriteLine(_T("╠═══════════════════════════════════════════╩╩═══════════════════════════════════════════╣"));
-	ConsoleOut_WriteLine(_T("║ Opción:                                                                                ║"));
-	ConsoleOut_Write/**/(_T("╚════════════════════════════════════════════════════════════════════════════════════════╝"));
+	DaySummary_PrintTable();
 }
 
 static bool MainMenuOptionHandler(OptionHandlerArgs) {
