@@ -5,6 +5,7 @@
 #endif
 #include "StringMap.h"
 #include "ConsoleStyle.h"
+#include "TextLayout.h"
 
 // Imprime una cadena en la consola.
 void ConsoleOut_Write(const TSTR str);
@@ -14,6 +15,9 @@ void ConsoleOut_WriteLine(const TSTR str);
 
 // Imprime una cadena en la consola con el estilo especificado.
 void ConsoleOut_WriteStyled(const TSTR str, ConsoleStyle style);
+
+// Imprime una cadena en la consola con la alineación especificada.
+void ConsoleOut_WriteAligned(const TSTR str, size_t width, TextAlignment alignment);
 
 // Imprime una cadena con formato en la consola.
 #define ConsoleOut_WriteFormat(format, ...) \
@@ -31,8 +35,8 @@ void ConsoleOut_WriteCharRepeatStyled(TCHAR ch, size_t repeatCount, ConsoleStyle
 // Imprime un entero positivo en la consola.
 void ConsoleOut_WriteUInt(UINT num);
 
-// Imprime de manera centrada un entero positivo en la consola.
-void ConsoleOut_WriteCenteredUInt(UINT num, size_t width);
+// Imprime un entero positivo en la consola con la alineación especificada.
+void ConsoleOut_WriteAlignedUInt(UINT num, size_t width, TextAlignment alignment);
 
 // Nueva linea en la consola.
 void ConsoleOut_NewLine(void);

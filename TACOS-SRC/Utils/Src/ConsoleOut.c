@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "ConsoleCursor.h"
 #include "MathUtils.h"
-#include "TextLayout.h"
 
 void ConsoleOut_Write(const TSTR str) {
 	_fputts(str, stdout);
@@ -18,6 +17,23 @@ void ConsoleOut_WriteStyled(const TSTR str, ConsoleStyle style) {
 	ConsoleStyle_Set(style);
 	ConsoleOut_Write(str);
 	ConsoleStyle_Set(oldStyle);
+}
+
+static size_t ConsoleOut_StartAlignment(size_t textLength, size_t width, TextAlignment alignment) {
+	size_t leftPad, rightPad;
+	TextLayout_AlignedTextPadding(textLength, width, alignment, &leftPad, &rightPad);
+	ConsoleCursor_MoveX((SHORT)leftPad);
+	return rightPad;
+}
+
+static void ConsoleOut_EndAlignment(size_t rightPad) {
+	ConsoleCursor_MoveX((SHORT)rightPad);
+}
+
+void ConsoleOut_WriteAligned(const TSTR str, size_t width, TextAlignment alignment) {
+	size_t rightPad = ConsoleOut_StartAlignment(TStrLen(str), width, alignment);
+	ConsoleOut_Write(str);
+	ConsoleOut_EndAlignment(rightPad);
 }
 
 void ConsoleOut_WriteChar(TCHAR ch) {
@@ -39,13 +55,11 @@ void ConsoleOut_WriteUInt(UINT num) {
 	ConsoleOut_WriteFormat(_T("%u"), num);
 }
 
-void ConsoleOut_WriteCenteredUInt(UINT num, size_t width) {
-	size_t leftPad, rightPad;
+void ConsoleOut_WriteAlignedUInt(UINT num, size_t width, TextAlignment alignment) {
 	size_t digitCount = Math_DigitCount((int)num);
-	TextLayout_CenterTextPadding(digitCount, width, &leftPad, &rightPad);
-	ConsoleCursor_MoveX((SHORT)leftPad);
+	size_t rightPad = ConsoleOut_StartAlignment(digitCount, width, alignment);
 	ConsoleOut_WriteUInt(num);
-	ConsoleCursor_MoveX((SHORT)rightPad);
+	ConsoleOut_EndAlignment(rightPad);
 }
 
 void ConsoleOut_NewLine(void) {
