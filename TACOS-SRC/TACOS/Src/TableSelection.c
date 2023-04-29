@@ -69,12 +69,24 @@ static void PrintTableNum(COORD tablePos, size_t tableNum) {
 	ConsoleOut_WriteFormat(_T("0%d"), (int)tableNum);
 }
 
+static ConsoleStyle GetTableSelectableStateColor(_In_ Table* table) {
+	bool tableOccupied = Orders_IsTableOccupied(table);
+	ConsoleStyle stateColor = tableOccupied ? BACKGROUND_WHITE : 0;
+	return stateColor;
+}
+
+static ConsoleStyle GetTableColorInContext(_In_ Table* table, bool onlyOccupied) {
+	ConsoleStyle tableColor = (onlyOccupied)
+		? GetTableSelectableStateColor(table)
+		: Orders_GetTableStatusColor(table);
+	return tableColor;
+}
+
 static void PrintTable(COORD tablePos, size_t tableNum, bool onlyOccupied) {
 	Table* table = Orders_GetTableByNum(tableNum);
-	if (onlyOccupied && !Orders_IsTableOccupied(table)) return;
 	ConsoleCursor_SetPos(tablePos);
 	PrintTableDisplayRowT1();
-	ConsoleStyle tableColor = (onlyOccupied) ? BACKGROUND_WHITE : Orders_GetTableStatusColor(table);
+	ConsoleStyle tableColor = GetTableColorInContext(table, onlyOccupied);
 	for (int i = 0; i < 2; i++) {
 		tablePos.Y++;
 		ConsoleCursor_SetPos(tablePos);
