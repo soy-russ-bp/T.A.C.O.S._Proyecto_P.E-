@@ -9,4 +9,4 @@
 // A2 - allocSize - size_t - Tamaño de la asignación de memoria.
 #define CheckedMalloc(out, allocSize) \
 	out = malloc(allocSize); \
-	Assert(out != NULL, "Error on malloc.")
+	Assert(out != NULL, "Error on malloc")

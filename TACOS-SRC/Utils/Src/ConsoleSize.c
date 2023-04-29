@@ -11,14 +11,14 @@ static short buffSizeOffset, windowSizeOffset;
 static void ConsoleSize_SetBufferSize(short width, short height) {
 	COORD newScreenBuffSize = { width + buffSizeOffset, height };
 	BOOL succeeded = SetConsoleScreenBufferSize(ConsoleOutHandle, newScreenBuffSize);
-	Assert(succeeded, "Error setting console buffer size.");
+	Assert(succeeded, "Error setting console buffer size");
 }
 
 // Establece el tamaño de la ventana de la consola sin agregar ningún tipo de compensación.
 static void ConsoleSize_SetWindowSizeNoOffset(short width, short height) {
 	SMALL_RECT window = { 0, 0, width, height };
 	BOOL succeeded = SetConsoleWindowInfo(ConsoleOutHandle, TRUE, &window);
-	Assert(succeeded, "Error setting console window size.");
+	Assert(succeeded, "Error setting console window size");
 }
 
 // Establece el tamaño de la ventana de la consola, aplicando una compensación,

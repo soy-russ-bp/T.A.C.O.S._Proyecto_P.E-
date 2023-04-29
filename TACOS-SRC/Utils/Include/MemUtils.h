@@ -9,8 +9,8 @@
 // A2 - allocSize - size_t - Tamaño de la asignación de memoria.
 #define CheckedMalloc(out, allocSize) \
 	out = malloc(allocSize); \
-	Assert(out != NULL, "Error on malloc.")
+	Assert(out != NULL, "Error on malloc")
 
 #define CheckedCopy(dst, src) \
 	errno_t error = memcpy_s(&(dst), sizeof(dst), &(src), sizeof(src)); \
-	Assert(!error, "Error executing memcpy_s.")
+	Assert(!error, "Error executing memcpy_s")
