@@ -151,8 +151,7 @@
     <ClInclude Include="TACOS-SRC\TACOS\Include\Logo.h" />
     <ClInclude Include="TACOS-SRC\TACOS\Include\Main.h" />
     <ClInclude Include="TACOS-SRC\TACOS\Include\MainMenu.h" />
-    <ClInclude Include="TACOS-SRC\TACOS\Include\ModifyOrderP1.h" />
-    <ClInclude Include="TACOS-SRC\TACOS\Include\ModifyOrderP2.h" />
+    <ClInclude Include="TACOS-SRC\TACOS\Include\ModifyOrder.h" />
     <ClInclude Include="TACOS-SRC\TACOS\Include\NewOrder.h" />
     <ClInclude Include="TACOS-SRC\TACOS\Include\Options.h" />
     <ClInclude Include="TACOS-SRC\TACOS\Include\Orders.h" />
@@ -194,8 +193,7 @@
     <ClCompile Include="TACOS-SRC\TACOS\Src\Logo.c" />
     <ClCompile Include="TACOS-SRC\TACOS\Src\Main.c" />
     <ClCompile Include="TACOS-SRC\TACOS\Src\MainMenu.c" />
-    <ClCompile Include="TACOS-SRC\TACOS\Src\ModifyOrderP1.c" />
-    <ClCompile Include="TACOS-SRC\TACOS\Src\ModifyOrderP2.c" />
+    <ClCompile Include="TACOS-SRC\TACOS\Src\ModifyOrder.c" />
     <ClCompile Include="TACOS-SRC\TACOS\Src\NewOrder.c" />
     <ClCompile Include="TACOS-SRC\TACOS\Src\Options.c" />
     <ClCompile Include="TACOS-SRC\TACOS\Src\Orders.c" />
