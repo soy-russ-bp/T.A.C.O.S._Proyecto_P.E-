@@ -156,6 +156,9 @@
     <ClInclude Include="TACOS-SRC\TACOS\Include\ModifyOrder.h">
       <Filter>Header Files\TACOS</Filter>
     </ClInclude>
+    <ClInclude Include="TACOS-SRC\TACOS\Include\DaySummary.h">
+      <Filter>Header Files\TACOS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TACOS-SRC\TACOS\Src\Main.c">
@@ -234,6 +237,9 @@
       <Filter>Source Files\TACOS</Filter>
     </ClCompile>
     <ClCompile Include="TACOS-SRC\TACOS\Src\ModifyOrder.c">
+      <Filter>Source Files\TACOS</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\TACOS\Src\DaySummary.c">
       <Filter>Source Files\TACOS</Filter>
     </ClCompile>
   </ItemGroup>
