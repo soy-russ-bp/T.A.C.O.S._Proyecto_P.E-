@@ -31,16 +31,16 @@ void ConsoleConfig_DisableTextSelect(void) {
 
 void ConsoleConfig_FillConsoleBufferInfo(ConsoleBufferInfo* consoleBufferInfo) {
 	BOOL succeeded = GetConsoleScreenBufferInfo(ConsoleOutHandle, consoleBufferInfo);
-	Assert(succeeded, "Error getting screen buffer info.");
+	Assert(succeeded, "Error getting screen buffer info");
 }
 
 LONG_PTR ConsoleConfig_GetWindowLongPtr(int nIndex) {
 	LONG_PTR windowPtr = GetWindowLongPtr(ConsoleWindow, nIndex);
-	Assert(windowPtr, "Error getting window LongPtr.");
+	Assert(windowPtr, "Error getting window LongPtr");
 	return windowPtr;
 }
 
 void ConsoleConfig_SetWindowLongPtr(int nIndex, LONG_PTR newLongPtr) {
 	LONG_PTR setWindowPtrResult = SetWindowLongPtr(ConsoleWindow, nIndex, newLongPtr);
-	Assert(setWindowPtrResult, "Error setting window LongPtr.");
+	Assert(setWindowPtrResult, "Error setting window LongPtr");
 }

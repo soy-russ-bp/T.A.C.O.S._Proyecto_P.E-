@@ -87,7 +87,7 @@ LLNodeName* LLGetNodeAtFName(_In_ LLName* list, size_t index) {
 	LLNodeName* node = NULL;
 	for (size_t nodeI = 0; nodeI <= index; nodeI++) {
 		if (!LLIterateFName(list, &node)) {
-			Throw("Index out of bounds of the list.");
+			Throw("Index out of bounds of the list");
 		}
 	}
 	return node;

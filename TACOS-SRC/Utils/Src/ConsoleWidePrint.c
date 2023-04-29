@@ -11,7 +11,7 @@
 void EnableWidePrint(void) {
 	setlocale(LC_ALL, "");
 	int setmodeResult = _setmode(_fileno(stdout), _O_U16TEXT);
-	Assert(setmodeResult != -1, "Error setting wide print.");
+	Assert(setmodeResult != -1, "Error setting wide print");
 }
 
 #endif
