@@ -7,6 +7,7 @@
 #include "CharUtils.h"
 #include "TextLayout.h"
 #include "Sleep.h"
+#include "Exceptions.h"
 
 #define Max_Options 5
 #define OptionMaxLen 19
@@ -111,7 +112,7 @@ static void PrintOptions(const OptionGroup* optionGroup) {
 	PrintOptionGroupOptions(optionGroup);
 }
 
-static void PrintSubmittedInvalidOption(TSTR errorMsg) {
+static void PrintSubmittedInvalidOption(_In_opt_ TSTR errorMsg) {
 	if (errorMsg == NULL) errorMsg = InvalidOptionMsg;// TODO
 	ConsoleOut_Write(ErrorMsgSeparator);
 	ConsoleOut_WriteStyled(errorMsg, BrightBack(BACKGROUND_RED) | BrightFore(FOREGROUND_WHITE));
@@ -132,7 +133,38 @@ static bool UpperLetterOrNumFilter(TCHAR* inputChPtr) {
 
 static TCHAR GetOptionSubmit(void) {
 	ConsoleCursor_SetPos(OptionWriteCursorPos);
-	return GetSingleSubmitChar(UpperLetterOrNumFilter);
+	return ConsoleIn_GetSingleSubmitChar(UpperLetterOrNumFilter);
+}
+
+static void GetOptionStrSubmit(TSTR inputBuf, size_t bufSize) {
+	ConsoleCursor_SetPos(OptionWriteCursorPos);
+	ConsoleIn_GetFixedSubmitStr(inputBuf, bufSize, UpperLetterOrNumFilter);
+}
+
+void HandleStrOptions(TSTR inputBuf, size_t bufSize, const OptionGroup* optionGroup, OptionHandler optionHandler) {
+	HandleStrOptionsExtra(inputBuf, bufSize, optionGroup, optionHandler, NULL);
+}
+
+void HandleStrOptionsExtra(TSTR inputBuf, size_t bufSize, const OptionGroup* optionGroup, OptionHandler optionHandler, _Inout_opt_ void* extraInfo) {
+	PrintOptions(optionGroup);
+	Action navAction;
+	do {
+		OptionInput optionInput = { 0 };
+		if (bufSize == 1) {
+			optionInput.single = GetOptionSubmit();
+		} else {
+			AssertNotNull(inputBuf);
+			GetOptionStrSubmit(inputBuf, bufSize);
+			optionInput.string = inputBuf;
+		}
+		navAction = NULL;
+		TSTR errorMsg = NULL;
+		bool isValidOption = optionHandler(optionInput, &navAction, &errorMsg, extraInfo);
+		if (isValidOption) break;
+		else PrintSubmittedInvalidOption(errorMsg);
+	} while (true);
+	ConsoleOut_Backspace();
+	Action_TryExecute(navAction);
 }
 
 void HandleOptions(const OptionGroup* optionGroup, OptionHandler optionHandler) {
@@ -140,15 +172,5 @@ void HandleOptions(const OptionGroup* optionGroup, OptionHandler optionHandler) 
 }
 
 void HandleOptionsExtra(const OptionGroup* optionGroup, OptionHandler optionHandler, _Inout_opt_ void* extraInfo) {
-	PrintOptions(optionGroup);
-	Action optionAction = NULL;
-	do {
-		TCHAR option = GetOptionSubmit();
-		TSTR errorMsg = NULL;
-		bool isValidOption = optionHandler(option, &optionAction, &errorMsg, extraInfo);
-		if (isValidOption) break;
-		else PrintSubmittedInvalidOption(errorMsg);
-	} while (true);
-	ConsoleOut_Backspace();
-	Action_TryExecute(optionAction);
+	HandleStrOptionsExtra(NULL, 1, optionGroup, optionHandler, extraInfo);
 }
