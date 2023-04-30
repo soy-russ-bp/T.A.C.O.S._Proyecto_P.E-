@@ -1,3 +1,5 @@
+#include "Flags.h"
+#pragma once
 #include "Sleep.h"
 
 // Reproduce el sonido de inicio.
