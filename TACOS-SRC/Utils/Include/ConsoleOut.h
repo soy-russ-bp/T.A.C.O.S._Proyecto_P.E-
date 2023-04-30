@@ -8,16 +8,16 @@
 #include "TextLayout.h"
 
 // Imprime una cadena en la consola.
-void ConsoleOut_Write(SalExt_Str_In_NotNull_ TSTR str);
+void ConsoleOut_Write(const TSTR str);
 
 // Imprime una cadena en la consola y avanza el cursor a la siguiente linea.
-void ConsoleOut_WriteLine(SalExt_Str_In_NotNull_ TSTR str);
+void ConsoleOut_WriteLine(const TSTR str);
 
 // Imprime una cadena en la consola con el estilo especificado.
-void ConsoleOut_WriteStyled(SalExt_Str_In_NotNull_ TSTR str, ConsoleStyle style);
+void ConsoleOut_WriteStyled(const TSTR str, ConsoleStyle style);
 
 // Imprime una cadena en la consola con la alineación especificada.
-void ConsoleOut_WriteAligned(SalExt_Str_In_NotNull_ TSTR str, size_t width, TextAlignment alignment);
+void ConsoleOut_WriteAligned(const TSTR str, size_t width, TextAlignment alignment);
 
 // Imprime una cadena con formato en la consola.
 #define ConsoleOut_WriteFormat(format, ...) \
