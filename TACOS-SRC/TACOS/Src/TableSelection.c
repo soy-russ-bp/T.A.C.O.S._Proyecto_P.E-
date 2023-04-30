@@ -149,7 +149,8 @@ static void GetValidatorAndSelectStyle(bool onlyOccupied, _Out_ TableNumValidato
 }
 
 static bool TableSelectionOptionHandler(OptionHandlerArgs) {
-	WarnIgnore_UnusedVar(action);
+	WarnIgnore_UnusedVar(navAction);
+	TCHAR option = optionInput.single;
 	TableSelectionInfo* selectionInfo = ((TableSelectionInfo*)extraInfo);
 	AssertNotNull(selectionInfo);
 	{

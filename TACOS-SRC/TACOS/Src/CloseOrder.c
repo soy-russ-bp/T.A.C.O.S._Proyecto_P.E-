@@ -14,8 +14,8 @@ static const OptionGroup CloseOrderOptions = { StaticArrayAndLength(CloseOrderMe
 static bool CloseOrderOptionHandler(OptionHandlerArgs) {
 	// TODO
 	// OptionHandlerArgs: TCHAR option, Action* action, TSTR* errorMsg, void* extraInfo
-	WarnIgnore_UnusedVar(option);
-	WarnIgnore_UnusedVar(action);
+	WarnIgnore_UnusedVar(optionInput);
+	WarnIgnore_UnusedVar(navAction);
 	WarnIgnore_UnusedVar(extraInfo);
 	// ---
 	*errorMsg = _T("Por implementar");

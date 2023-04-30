@@ -53,16 +53,17 @@ static void PrintMainMenu(void) {
 
 static bool MainMenuOptionHandler(OptionHandlerArgs) {
 	WarnIgnore_UnusedVar(extraInfo);
+	TCHAR option = optionInput.single;
 	switch (option) {
 		case 'N':
-			*action = &NewOrder_Menu;
+			*navAction = &NewOrder_Menu;
 			return true;
 		case 'M': case 'F':
 			if (Orders_GetOpenCount() == 0) {
 				*errorMsg = _T("No hay mesas abiertas");
 				return false;
 			}
-			*action = (option == 'M') ? &ModifyOrder_Menu : &CloseOrder_Menu;
+			*navAction = (option == 'M') ? &ModifyOrder_Menu : &CloseOrder_Menu;
 			return true;
 		case 'S':
 			SystemEnd();
