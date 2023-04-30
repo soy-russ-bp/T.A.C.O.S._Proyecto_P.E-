@@ -12,5 +12,8 @@ ConsoleStyle ConsoleStyle_Get(void);
 // Establece el estilo actual de la consola.
 void ConsoleStyle_Set(ConsoleStyle style);
 
+// Obtiene el estilo actual de la consola y establece uno nuevo.
+ConsoleStyle ConsoleStyle_GetSet(ConsoleStyle style);
+
 // Reinicia el estilo de la consola.
 void ConsoleStyle_Reset(void);

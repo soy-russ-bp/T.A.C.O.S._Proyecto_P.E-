@@ -13,8 +13,7 @@ void ConsoleOut_WriteLine(SalExt_Str_In_NotNull_ TSTR str) {
 }
 
 void ConsoleOut_WriteStyled(SalExt_Str_In_NotNull_ TSTR str, ConsoleStyle style) {
-	ConsoleStyle oldStyle = ConsoleStyle_Get();
-	ConsoleStyle_Set(style);
+	ConsoleStyle oldStyle = ConsoleStyle_GetSet(style);
 	ConsoleOut_Write(str);
 	ConsoleStyle_Set(oldStyle);
 }
@@ -45,8 +44,7 @@ void ConsoleOut_WriteCharRepeat(TCHAR ch, size_t repeatCount) {
 }
 
 void ConsoleOut_WriteCharRepeatStyled(TCHAR ch, size_t repeatCount, ConsoleStyle style) {
-	ConsoleStyle oldStyle = ConsoleStyle_Get();
-	ConsoleStyle_Set(style);
+	ConsoleStyle oldStyle = ConsoleStyle_GetSet(style);
 	ConsoleOut_WriteCharRepeat(ch, repeatCount);
 	ConsoleStyle_Set(oldStyle);
 }
