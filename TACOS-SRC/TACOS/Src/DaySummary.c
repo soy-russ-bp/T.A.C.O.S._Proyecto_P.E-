@@ -1,6 +1,7 @@
 ﻿#include "DaySummary.h"
 #include "StringMap.h"
 #include "ConsoleOut.h"
+#include "Orders.h"
 
 static void PrintTableHeader(void) {
 	ConsoleOut_WriteLine(_T("╠════════════════════════════════════════════════════════════════════════════════════════╣"));
@@ -16,28 +17,54 @@ static void PrintTableFooter(void) {
 	ConsoleOut_Write/**/(_T("╚════════════════════════════════════════════════════════════════════════════════════════╝"));
 }
 
-static void PrintTableField(TSTR fieldName, UINT value) {
+static void PrintFieldStart(TSTR fieldName) {
 	ConsoleOut_Write(_T("║ "));
 	ConsoleOut_WriteAligned(fieldName, 8, ALIGN_RIGHT);
-	ConsoleOut_Write(_T(": $"));
-	//ConsoleOut_Write(_T("║ "));
-	ConsoleOut_WriteChar(L'║');
+	ConsoleOut_Write(_T(": "));
 }
 
-static void PrintTableFieldRow(TSTR field1Name, UINT value1, TSTR field2Name, UINT value2) {
-	PrintTableField(field1Name, value1);
-	PrintTableField(field2Name, value2);
+static void PrintFieldEnd(void) {
+	ConsoleOut_Write(_T(" ║"));
+}
+
+#define FieldContentSize (31)
+
+static void PrintMoneyField(TSTR fieldName, double fieldValue) {
+	PrintFieldStart(fieldName);
+	ConsoleOut_WriteChar(L'$');
+	ConsoleOut_WriteAlignedDouble(fieldValue, FieldContentSize - 1, 15, ALIGN_LEFT);
+	PrintFieldEnd();
+}
+
+static void PrintQuantityField(TSTR fieldName, UINT fieldValue) {
+	PrintFieldStart(fieldName);
+	ConsoleOut_WriteAlignedUInt(fieldValue, FieldContentSize, ALIGN_LEFT);
+	PrintFieldEnd();
+}
+
+static void PrintFieldRow(TSTR moneyFieldName, double moneyFieldValue, TSTR quantityFieldName, UINT quantityFieldValue) {
+	PrintMoneyField(moneyFieldName, moneyFieldValue);
+	PrintQuantityField(quantityFieldName, quantityFieldValue);
 	ConsoleOut_NewLine();
 }
 
+static void PrintRow1(void) {
+	UINT openCount = Orders_GetOpenCount();
+	PrintFieldRow(_T("Subtotal"), 0, _T("Abiertas"), openCount);
+}
+
+static void PrintRow2(void) {
+	PrintFieldRow(_T("Propina"), 0, _T("Cerradas"), 0);
+}
+
+static void PrintRow3(void) {
+	PrintFieldRow(_T("Total"), 0, _T("Totales"), 0);
+}
+
 static void PrintTableData(void) {
-	// TODO
-	// PrintTableFieldRow(_T("Subtotal"), 0, _T("Abiertas"), 0);
-	// PrintTableFieldRow(_T("Propina"), 0, _T("Cerradas"), 0);
-	// PrintTableFieldRow(_T("Total"), 0, _T("Totales"), 0);
-	ConsoleOut_WriteLine(_T("║ Subtotal: $0                              ║║ Abiertas: 0                               ║"));
-	ConsoleOut_WriteLine(_T("║  Propina: $0                              ║║ Cerradas: 0                               ║"));
-	ConsoleOut_WriteLine(_T("║    Total: $0                              ║║  Totales: 0                               ║"));
+	PrintRow1();
+	PrintRow2();
+	PrintRow3();
 }
 
 void DaySummary_PrintTable(void) {
