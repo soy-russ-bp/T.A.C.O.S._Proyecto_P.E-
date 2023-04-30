@@ -165,6 +165,9 @@
     <ClInclude Include="TACOS-SRC\TACOS\Include\OrderList.h">
       <Filter>Header Files\TACOS</Filter>
     </ClInclude>
+    <ClInclude Include="TACOS-SRC\TACOS\Include\Products.h">
+      <Filter>Header Files\TACOS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TACOS-SRC\TACOS\Src\Main.c">

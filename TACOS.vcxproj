@@ -158,6 +158,7 @@
     <ClInclude Include="TACOS-SRC\TACOS\Include\Options.h" />
     <ClInclude Include="TACOS-SRC\TACOS\Include\OrderList.h" />
     <ClInclude Include="TACOS-SRC\TACOS\Include\Orders.h" />
+    <ClInclude Include="TACOS-SRC\TACOS\Include\Products.h" />
     <ClInclude Include="TACOS-SRC\TACOS\Include\Sounds.h" />
     <ClInclude Include="TACOS-SRC\TACOS\Include\SystemEnd.h" />
     <ClInclude Include="TACOS-SRC\TACOS\Include\SystemStart.h" />
