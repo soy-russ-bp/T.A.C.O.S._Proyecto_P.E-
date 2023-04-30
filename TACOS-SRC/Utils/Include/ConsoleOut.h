@@ -38,6 +38,9 @@ void ConsoleOut_WriteUInt(UINT num);
 // Imprime un entero positivo en la consola con la alineación especificada.
 void ConsoleOut_WriteAlignedUInt(UINT num, size_t width, TextAlignment alignment);
 
+// Imprime un decimal en la consola con la alineación especificada.
+void ConsoleOut_WriteAlignedDouble(double num, size_t width, BYTE decimals, TextAlignment alignment);
+
 // Nueva linea en la consola.
 void ConsoleOut_NewLine(void);
 
