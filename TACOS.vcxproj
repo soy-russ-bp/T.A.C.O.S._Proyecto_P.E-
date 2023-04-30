@@ -183,6 +183,7 @@
     <ClInclude Include="TACOS-SRC\Utils\Include\MsgBox.h" />
     <ClInclude Include="TACOS-SRC\Utils\Include\SalExt.h" />
     <ClInclude Include="TACOS-SRC\Utils\Include\Sleep.h" />
+    <ClInclude Include="TACOS-SRC\Utils\Include\StrFormat.h" />
     <ClInclude Include="TACOS-SRC\Utils\Include\StringMap.h" />
     <ClInclude Include="TACOS-SRC\Utils\Include\SysArch.h" />
     <ClInclude Include="TACOS-SRC\Utils\Include\ConsoleWidePrint.h" />
@@ -216,6 +217,7 @@
     <ClCompile Include="TACOS-SRC\Utils\Src\MathUtils.c" />
     <ClCompile Include="TACOS-SRC\Utils\Src\MsgBox.c" />
     <ClCompile Include="TACOS-SRC\Utils\Src\ConsoleWidePrint.c" />
+    <ClCompile Include="TACOS-SRC\Utils\Src\StrFormat.c" />
     <ClCompile Include="TACOS-SRC\Utils\Src\TextLayout.c" />
   </ItemGroup>
   <ItemGroup>
