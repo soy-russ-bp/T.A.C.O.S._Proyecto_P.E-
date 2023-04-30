@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "ConsoleCursor.h"
 #include "MathUtils.h"
+#include "StrFormat.h"
+#include "WarnIgnore.h"
 
 void ConsoleOut_Write(const TSTR str) {
 	_fputts(str, stdout);
@@ -59,6 +61,17 @@ void ConsoleOut_WriteAlignedUInt(UINT num, size_t width, TextAlignment alignment
 	size_t digitCount = Math_DigitCount((int)num);
 	size_t rightPad = ConsoleOut_StartAlignment(digitCount, width, alignment);
 	ConsoleOut_WriteUInt(num);
+	ConsoleOut_EndAlignment(rightPad);
+}
+
+void ConsoleOut_WriteAlignedDouble(double num, size_t width, BYTE decimals, TextAlignment alignment) {
+	TCHAR format[] = FORMAT_DEC_BUILD_INIT;
+	StrFormat_FillDecFormat(format, decimals);
+	WarnIgnore_SuppressIn(WarnId_ExpectedStringLiteral);
+	size_t length = StrFormat_CalcLength(format, num);
+	size_t rightPad = ConsoleOut_StartAlignment(length, width, alignment);
+	WarnIgnore_SuppressIn(WarnId_ExpectedStringLiteral);
+	ConsoleOut_WriteFormat(format, num);
 	ConsoleOut_EndAlignment(rightPad);
 }
 
