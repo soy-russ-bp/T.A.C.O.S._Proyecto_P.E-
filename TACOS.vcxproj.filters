@@ -162,6 +162,9 @@
     <ClInclude Include="TACOS-SRC\Utils\Include\StrFormat.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="TACOS-SRC\TACOS\Include\OrderList.h">
+      <Filter>Header Files\TACOS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TACOS-SRC\TACOS\Src\Main.c">
@@ -247,6 +250,12 @@
     </ClCompile>
     <ClCompile Include="TACOS-SRC\Utils\Src\StrFormat.c">
       <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\TACOS\Src\Products.c">
+      <Filter>Source Files\TACOS</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\TACOS\Src\OrderList.c">
+      <Filter>Source Files\TACOS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -6,10 +6,6 @@
 
 #if defined(GDEF)
 
-#undef GDEF
-#undef GTYPE
-#undef GNAME
-
 #define LinkedListIgnoreEdit
 
 #pragma warning( disable : 4464 )
@@ -34,14 +30,14 @@
 #define LLPrefix TCONCAT(LLName, _)
 #define AddLLPrefix(Name) TCONCAT(LLPrefix, Name)
 
-#define P_LLPrefix TCONCAT(P_, LLPrefix)
-#define AddP_LLPrefix(Name) TCONCAT(P_LLPrefix, Name)
+//#define P_LLPrefix TCONCAT(P_, LLPrefix)
+//#define AddP_LLPrefix(Name) TCONCAT(P_LLPrefix, Name)
 
 // - Uso interno - //
 #define LLNodeName TCONCAT(LLName, Node)
-#define LLAllocNodeFName AddP_LLPrefix(AllocNode)
-#define LLCreateNodeFName AddP_LLPrefix(CreateNode)
-#define LLUpdateTailFName AddP_LLPrefix(UpdateTail)
+//#define LLAllocNodeFName AddP_LLPrefix(AllocNode)
+//#define LLCreateNodeFName AddP_LLPrefix(CreateNode)
+//#define LLUpdateTailFName AddP_LLPrefix(UpdateTail)
 
 // - Uso público - //
 #define LLIterateFName AddLLPrefix(Iterate)
@@ -70,20 +66,11 @@ typedef struct LLNodeName {
 // M1 - LL_Node - head  - Primer elemento de la lista.
 // M2 - LL_Node - tail  - Ultimo elemento de la lista.
 // M3 - size_t  - count - Cantidad de elementos en la lista.
-typedef struct {
+typedef struct LLName {
 	size_t count;
 	LLNodeName* head;
 	LLNodeName* tail;
 } LLName;
-
-// Uso interno. Asigna memoria a un nodo.
-LLNodeName* LLAllocNodeFName(GTYPE data);
-
-// Uso interno. Crea un nodo.
-LLNodeName* LLCreateNodeFName(_In_ LLName* list, GTYPE data, _Out_ bool* furtherProcessRequired);
-
-// Uso interno. Estable la nueva cola de la lista.
-void LLUpdateTailFName(_In_ LLName* list, _Inout_ LLNodeName* newTail);
 
 // Crea un contenedor de lista enlazada.
 LLName* LLNewFName(void);

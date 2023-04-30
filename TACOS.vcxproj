@@ -118,6 +118,7 @@
       <TreatAngleIncludeAsExternal>true</TreatAngleIncludeAsExternal>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <CompileAs>CompileAsC</CompileAs>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -155,6 +156,7 @@
     <ClInclude Include="TACOS-SRC\TACOS\Include\ModifyOrder.h" />
     <ClInclude Include="TACOS-SRC\TACOS\Include\NewOrder.h" />
     <ClInclude Include="TACOS-SRC\TACOS\Include\Options.h" />
+    <ClInclude Include="TACOS-SRC\TACOS\Include\OrderList.h" />
     <ClInclude Include="TACOS-SRC\TACOS\Include\Orders.h" />
     <ClInclude Include="TACOS-SRC\TACOS\Include\Sounds.h" />
     <ClInclude Include="TACOS-SRC\TACOS\Include\SystemEnd.h" />
@@ -199,7 +201,9 @@
     <ClCompile Include="TACOS-SRC\TACOS\Src\ModifyOrder.c" />
     <ClCompile Include="TACOS-SRC\TACOS\Src\NewOrder.c" />
     <ClCompile Include="TACOS-SRC\TACOS\Src\Options.c" />
+    <ClCompile Include="TACOS-SRC\TACOS\Src\OrderList.c" />
     <ClCompile Include="TACOS-SRC\TACOS\Src\Orders.c" />
+    <ClCompile Include="TACOS-SRC\TACOS\Src\Products.c" />
     <ClCompile Include="TACOS-SRC\TACOS\Src\Sounds.c" />
     <ClCompile Include="TACOS-SRC\TACOS\Src\SystemEnd.c" />
     <ClCompile Include="TACOS-SRC\TACOS\Src\SystemStart.c" />
