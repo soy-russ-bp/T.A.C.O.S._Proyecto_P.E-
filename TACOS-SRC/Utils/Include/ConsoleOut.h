@@ -33,6 +33,7 @@ void ConsoleOut_WriteAligned(SalExt_Str_In_NotNull_ TSTR str, size_t width, Text
 #define ConsoleOut_WriteFormat(format, ...) \
 	_tprintf(format, __VA_ARGS__)
 
+// Imprime una cadena con formato en la consola con la alineación especificada.
 #define ConsoleOut_WriteFormatAligned(width, alignment, format, ...) { \
 	size_t length___RESERVED = StrFormat_CalcLength(format, __VA_ARGS__); \
 	size_t rightPad___RESERVED = ConsoleOut_StartAlignment(length___RESERVED, width, alignment); \
