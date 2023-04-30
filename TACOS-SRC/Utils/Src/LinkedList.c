@@ -13,7 +13,8 @@
 
 #ifdef GDEF
 
-LLNodeName* LLAllocNodeFName(GTYPE data) {
+// Asigna memoria a un nodo.
+static LLNodeName* LLAllocNodeFName(GTYPE data) {
 	LLNodeName* newNode;
 	CheckedMalloc(newNode, sizeof(LLNodeName));
 	CheckedCopy(newNode->data, data);
@@ -22,7 +23,8 @@ LLNodeName* LLAllocNodeFName(GTYPE data) {
 	return newNode;
 }
 
-LLNodeName* LLCreateNodeFName(_In_ LLName* list, GTYPE data, _Out_ bool* furtherProcessRequired) {
+// Crea un nodo.
+static LLNodeName* LLCreateNodeFName(_In_ LLName* list, GTYPE data, _Out_ bool* furtherProcessRequired) {
 	LLNodeName* newNode = LLAllocNodeFName(data);
 	*furtherProcessRequired = (list->head != NULL);
 	if (!(*furtherProcessRequired)) {
@@ -33,7 +35,8 @@ LLNodeName* LLCreateNodeFName(_In_ LLName* list, GTYPE data, _Out_ bool* further
 	return newNode;
 }
 
-void LLUpdateTailFName(_In_ LLName* list, _Inout_ LLNodeName* newTail) {
+// Estable la nueva cola de la lista.
+static void LLUpdateTailFName(_In_ LLName* list, _Inout_ LLNodeName* newTail) {
 	list->tail->next = newTail;
 	newTail->last = list->tail;
 	list->tail = newTail;
