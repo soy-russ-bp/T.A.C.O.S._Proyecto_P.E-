@@ -2,8 +2,8 @@
 #include "ArrayUtils.h"
 
 static const ProductInfo Products[] = {
-	{ _T("Tacos de pastor"), 15 },
-	{ _T("Tacos de asada"), 20 }
+	{ _T("TAP"), _T("Tacos de pastor"), 15 },
+	{ _T("TDA"), _T("Tacos de asada"), 20 }
 };
 
 const size_t Products_TypesCount = StaticLength(Products);
