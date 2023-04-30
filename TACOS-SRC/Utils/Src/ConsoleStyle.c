@@ -11,6 +11,12 @@ void ConsoleStyle_Set(ConsoleStyle style) {
 	SetConsoleTextAttribute(ConsoleOutHandle, style);
 }
 
+ConsoleStyle ConsoleStyle_GetSet(ConsoleStyle style) {
+	ConsoleStyle oldStyle = ConsoleStyle_Get();
+	ConsoleStyle_Set(style);
+	return oldStyle;
+}
+
 void ConsoleStyle_Reset(void) {
 	ConsoleStyle_Set(FOREGROUND_WHITE);
 }
