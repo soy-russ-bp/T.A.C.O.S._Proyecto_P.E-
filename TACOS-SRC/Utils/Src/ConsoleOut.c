@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include "ConsoleCursor.h"
 #include "MathUtils.h"
-#include "StrFormat.h"
-#include "WarnIgnore.h"
 
 void ConsoleOut_Write(SalExt_Str_In_NotNull_ TSTR str) {
 	_fputts(str, stdout);
@@ -21,14 +19,14 @@ void ConsoleOut_WriteStyled(SalExt_Str_In_NotNull_ TSTR str, ConsoleStyle style)
 	ConsoleStyle_Set(oldStyle);
 }
 
-static size_t ConsoleOut_StartAlignment(size_t textLength, size_t width, TextAlignment alignment) {
+size_t ConsoleOut_StartAlignment(size_t textLength, size_t width, TextAlignment alignment) {
 	size_t leftPad, rightPad;
 	TextLayout_AlignedTextPadding(textLength, width, alignment, &leftPad, &rightPad);
 	ConsoleCursor_MoveX((SHORT)leftPad);
 	return rightPad;
 }
 
-static void ConsoleOut_EndAlignment(size_t rightPad) {
+void ConsoleOut_EndAlignment(size_t rightPad) {
 	ConsoleCursor_MoveX((SHORT)rightPad);
 }
 
