@@ -32,7 +32,7 @@ static void PrintFieldEnd(void) {
 static void PrintMoneyField(TSTR fieldName, double fieldValue) {
 	PrintFieldStart(fieldName);
 	ConsoleOut_WriteChar(L'$');
-	ConsoleOut_WriteAlignedDouble(fieldValue, FieldContentSize - 1, 15, ALIGN_LEFT);
+	ConsoleOut_WriteAlignedDouble(fieldValue, FieldContentSize - 1, 2, ALIGN_LEFT);
 	PrintFieldEnd();
 }
 
