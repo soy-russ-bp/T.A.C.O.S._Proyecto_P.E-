@@ -1,6 +1,4 @@
 #include "Orders.h"
-#define GDEF
-#include "LinkedList.h"
 #include "ConsoleColors.h"
 #include "Exceptions.h"
 #include "MathUtils.h"
@@ -39,6 +37,21 @@ ConsoleStyle Orders_GetTableStatusColor(_In_ Table* table) {
 	return Orders_IsTableOccupied(table) ? TableOccupiedColor : TableAvailableColor;
 }
 
+static void Orders_OpenTable(_Inout_ Table* table) {
+	// TODO
+	if (table->orderList == NULL) {
+		table->orderList = LLOrder_New();
+	}
+	table->id = ++TotalOrderCount;
+	OpenOrderCount++;
+}
+
+void Orders_CloseTable(_Inout_ Table* table) {
+	table->id = 0;
+	table->moneySpent = 0;
+	LLOrder_Clear(table->orderList);
+}
+
 static const TSTR InvalidTableNumMsg = _T("# de mesa invalido");
 static const TSTR OccupiedTableMsg = _T("Mesa ocupada");
 static const TSTR NotOccupiedTableMsg = _T("Mesa no ocupada");
@@ -53,8 +66,7 @@ _Success_(OnFalseReturn) bool Orders_TryAssignTable(size_t tableNum, _Outptr_res
 		*errorMsg = OccupiedTableMsg;
 		return false;
 	}
-	table->id = ++TotalOrderCount;
-	OpenOrderCount++;
+	Orders_OpenTable(table);
 	return true;
 }
 

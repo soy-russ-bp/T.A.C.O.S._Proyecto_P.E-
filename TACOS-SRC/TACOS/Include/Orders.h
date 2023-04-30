@@ -2,31 +2,15 @@
 #pragma once
 #include "StringMap.h"
 #include "ConsoleStyle.h"
+#include "OrderList.h"
 
 #define TableCount 8
 #define LastTableI (TableCount - 1)
 #define TableOccupiedColor BACKGROUND_RED
 #define TableAvailableColor BACKGROUND_GREEN
 
-// Info de un producto del restaurante.
-typedef struct {
-	const TSTR name;
-	const double price;
-} Product;
-
-// Elemento de una orden.
-typedef struct {
-	Product product;
-	size_t count;
-} OrderElement;
-
-#define GDEC
-#define GTYPE OrderElement
-#define GNAME Order
-#include "LinkedList.h"
-
 // Información de una mesa.
-typedef struct {
+typedef struct Table {
 	UINT id;
 	float moneySpent;
 	LLOrder* orderList;
@@ -49,6 +33,9 @@ bool Orders_IsTableOccupied(_In_ Table* table);
 
 // Obtiene el color para una mesa en base a su disponibilidad.
 ConsoleStyle Orders_GetTableStatusColor(_In_ Table* table);
+
+// Cierra una mesa.
+void Orders_CloseTable(_Inout_ Table* table);
 
 // Trata de asignar una mesa, abriendo una nueva orden.
 // La asignación será exitosa cuando tableNum sea un número de mesa valido y esta no este ocupada.
