@@ -10,3 +10,5 @@ bool CharUtils_IsAsciiAlpha(TCHAR ch);
 bool CharUtils_IsAsciiDigit(TCHAR ch);
 
 _Success_(OnTrueReturn) bool CharUtils_IsAsciiDigitOut(TCHAR ch, _Out_ BYTE* digit);
+
+TCHAR CharUtils_ToAsciiDigit(BYTE digitAsNum);
