@@ -1,11 +1,14 @@
 ﻿#include "SystemStart.h"
+#include "MainMenu.h"
+
+#ifndef SkipTacosIntro
+
 #include "ConsoleOut.h"
 #include "ConsoleCursor.h"
 #include "Sounds.h"
 #include "Logo.h"
 #include "Beep.h"
 #include "Sleep.h"
-#include "MainMenu.h"
 
 static COORD PrintLoadingBarBase(void) {
 	ConsoleOut_WriteChar('[');
@@ -45,7 +48,11 @@ static void BootSequence(void) {
 	LoadingAnim();
 }
 
+#endif
+
 _Noreturn void SystemStart(void) {
+#ifndef SkipTacosIntro
 	BootSequence();
+#endif
 	MainMenu();
 }

@@ -5,4 +5,5 @@
 
 #ifdef _DEBUG
 #define NoBeep
+#define SkipTacosIntro
 #endif
