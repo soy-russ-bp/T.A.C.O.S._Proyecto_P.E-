@@ -64,11 +64,7 @@ void ConsoleOut_WriteAlignedDouble(double num, size_t width, BYTE decimals, Text
 	TCHAR format[] = FORMAT_DEC_BUILD_INIT;
 	StrFormat_FillDecFormat(format, decimals);
 	WarnIgnore_SuppressIn(WarnId_ExpectedStringLiteral);
-	size_t length = StrFormat_CalcLength(format, num);
-	size_t rightPad = ConsoleOut_StartAlignment(length, width, alignment);
-	WarnIgnore_SuppressIn(WarnId_ExpectedStringLiteral);
-	ConsoleOut_WriteFormat(format, num);
-	ConsoleOut_EndAlignment(rightPad);
+	ConsoleOut_WriteFormatAligned(width, alignment, format, num);
 }
 
 void ConsoleOut_NewLine(void) {
