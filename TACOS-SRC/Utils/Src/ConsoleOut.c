@@ -5,16 +5,16 @@
 #include "StrFormat.h"
 #include "WarnIgnore.h"
 
-void ConsoleOut_Write(const TSTR str) {
+void ConsoleOut_Write(SalExt_Str_In_NotNull_ TSTR str) {
 	_fputts(str, stdout);
 }
 
-void ConsoleOut_WriteLine(const TSTR str) {
+void ConsoleOut_WriteLine(SalExt_Str_In_NotNull_ TSTR str) {
 	ConsoleOut_Write(str);
 	ConsoleOut_NewLine();
 }
 
-void ConsoleOut_WriteStyled(const TSTR str, ConsoleStyle style) {
+void ConsoleOut_WriteStyled(SalExt_Str_In_NotNull_ TSTR str, ConsoleStyle style) {
 	ConsoleStyle oldStyle = ConsoleStyle_Get();
 	ConsoleStyle_Set(style);
 	ConsoleOut_Write(str);
@@ -32,7 +32,7 @@ static void ConsoleOut_EndAlignment(size_t rightPad) {
 	ConsoleCursor_MoveX((SHORT)rightPad);
 }
 
-void ConsoleOut_WriteAligned(const TSTR str, size_t width, TextAlignment alignment) {
+void ConsoleOut_WriteAligned(SalExt_Str_In_NotNull_ TSTR str, size_t width, TextAlignment alignment) {
 	size_t rightPad = ConsoleOut_StartAlignment(TStrLen(str), width, alignment);
 	ConsoleOut_Write(str);
 	ConsoleOut_EndAlignment(rightPad);
