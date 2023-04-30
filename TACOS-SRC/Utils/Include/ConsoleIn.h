@@ -17,5 +17,9 @@ void ConsoleIn_WaitForEnter(void);
 // Se puede modificar el carácter de entrada modificando {inputChPtr}.
 typedef bool(*CharFilter)(TCHAR* inputChPtr);
 
-// Obtiene un carácterer modificable hasta una confirmación con la tecla enter.
-TCHAR GetSingleSubmitChar(CharFilter filter);
+// Obtiene un carácterer, modificable hasta una confirmación con la tecla enter.
+TCHAR ConsoleIn_GetSingleSubmitChar(CharFilter filter);
+
+// Obtiene una cadena del tamaño especificado, modificable hasta una confirmación con la tecla enter.
+// BufferSize: Debe incluir el null terminator.
+void ConsoleIn_GetFixedSubmitStr(TSTR buffer, size_t bufferSize, CharFilter filter);
