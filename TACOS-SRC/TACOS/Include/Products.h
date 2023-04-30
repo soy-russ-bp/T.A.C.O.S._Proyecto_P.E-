@@ -11,6 +11,6 @@ typedef struct ProductInfo {
 } ProductInfo;
 WarnIgnore_AddedPadding_E
 
-size_t Products_GetTypesCount(void);
+extern const size_t Products_TypesCount;
 
 ProductInfo Products_GetProductInfo(size_t index);
