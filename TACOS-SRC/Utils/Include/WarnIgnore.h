@@ -1,7 +1,17 @@
 #include "Flags.h"
 #pragma once
+#include "MacroUtils.h"
+
+#define WarnId_ExpectedStringLiteral 4774
 
 #define WarnIgnore_UnusedVar(var) (void)(var)
+
+#define WarnIgnore_Suppress(warnId) \
+    __pragma(warning( suppress: warnId ))
+
+#define WarnIgnore_SuppressIn(warnId) \
+    WarnIgnore_Suppress(warnId) \
+    MACROEND
 
 #define WarnIgnore_AddedPadding_S \
 	__pragma(warning( push )) \
