@@ -3,10 +3,8 @@
 #include <stdarg.h>
 #include "Exceptions.h"
 #include "CharUtils.h"
-#include "MemUtils.h"
 
 static size_t lastAllocLen;
-static size_t lastAllocSize;
 
 void StrFormat_FillDecFormat(_Inout_ TSTR format, BYTE decimals) {
 	if (decimals == 0) return;
@@ -39,14 +37,17 @@ TSTR StrFormat_Aligned(SalExt_Str_In_NotNull_ TSTR buffer, SalExt_Str_In_NotNull
 }
 
 TSTR StrFormat_AlignedF(SalExt_Str_In_NotNull_ TSTR buffer, size_t width, TextAlignment alignment, SalExt_Str_In_NotNull_ TSTR format, ...) {
+	va_list args;
+	va_start(args, format);
+	size_t textLength = StrFormat_CalcLengthList(format, args);
+	va_end(args);
+
 	size_t leftPad, rightPad;
-	size_t textLength = lastAllocLen;
 	TextLayout_AlignedTextPadding(textLength, width, alignment, &leftPad, &rightPad);
 	UnsafeMemSet(buffer, ' ', leftPad);
 
-	va_list args;
 	va_start(args, format);
-	_vstprintf(&buffer[leftPad], lastAllocSize, format, args);
+	_vstprintf(&buffer[leftPad], lastAllocLen, format, args);
 	va_end(args);
 
 	UnsafeMemSet(&buffer[leftPad + textLength], ' ', rightPad);
@@ -56,6 +57,5 @@ TSTR StrFormat_AlignedF(SalExt_Str_In_NotNull_ TSTR buffer, size_t width, TextAl
 
 size_t StrFormat_GetAllocSize(size_t charCount) {
 	lastAllocLen = charCount;
-	lastAllocSize = (charCount + 1) * sizeof(TCHAR);
-	return lastAllocSize;
+	return (charCount + 1) * sizeof(TCHAR);
 }
