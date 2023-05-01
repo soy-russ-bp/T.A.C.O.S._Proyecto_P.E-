@@ -4,15 +4,8 @@
 #include "Orders.h"
 
 static void PrintHorizontalSeparatorCustom(TCHAR startCh, TCHAR middleA, TCHAR middleB, TCHAR endCh, bool newLine) {
-	ConsoleOut_WriteChar(startCh);
-	ConsoleOut_WriteCharRepeat(L'═', 43);
-	ConsoleOut_WriteChar(middleA);
-	ConsoleOut_WriteChar(middleB);
-	ConsoleOut_WriteCharRepeat(L'═', 43);
-	ConsoleOut_WriteChar(endCh);
-	if (newLine) {
-		ConsoleOut_NewLine();
-	}
+	ConsoleOut_WriteFormat(_T("%c%s%c%c%s%c"), startCh, SF_Repeat(L'═', 43), middleA, middleB, SF_Repeat(L'═', 43), endCh);
+	if (newLine) ConsoleOut_NewLine();
 }
 
 static void PrintHorizontalSeparator2(TCHAR middleA, TCHAR middleB) {
@@ -20,13 +13,11 @@ static void PrintHorizontalSeparator2(TCHAR middleA, TCHAR middleB) {
 }
 
 static void PrintHorizontalSeparator(TCHAR middle) {
-	PrintHorizontalSeparatorCustom(L'╠', middle, middle, L'╣', true);
+	PrintHorizontalSeparator2(middle, middle);
 }
 
 static void PrintCell(TSTR content, size_t width) {
-	ConsoleOut_WriteChar(L'║');
-	ConsoleOut_WriteAligned(content, width, ALIGN_CENTER);
-	ConsoleOut_WriteChar(L'║');
+	ConsoleOut_WriteFormat(_T("║%s║"), SF_Align(content, width, ALIGN_CENTER));
 }
 
 static void PrintTableHeader(void) {
@@ -41,10 +32,7 @@ static void PrintTableHeader(void) {
 }
 
 static void PrintOptionInputRow(void) {
-	ConsoleOut_Write(_T("║ Opción:"));
-	ConsoleOut_WriteCharRepeat(' ', 80);
-	ConsoleOut_WriteChar(L'║');
-	ConsoleOut_NewLine();
+	ConsoleOut_WriteFormat(_T("║ Opción:%s║\n"), SF_Repeat(' ', 80));
 }
 
 static void PrintTableFooter(void) {
@@ -53,29 +41,20 @@ static void PrintTableFooter(void) {
 	PrintHorizontalSeparatorCustom(L'╚', L'═', L'═', L'╝', false);
 }
 
-static void PrintFieldStart(TSTR fieldName) {
-	ConsoleOut_Write(_T("║ "));
-	ConsoleOut_WriteAligned(fieldName, 8, ALIGN_RIGHT);
-	ConsoleOut_Write(_T(": "));
-}
-
-static void PrintFieldEnd(void) {
-	ConsoleOut_Write(_T(" ║"));
-}
-
 #define FieldContentSize (31)
 
 static void PrintMoneyField(TSTR fieldName, double fieldValue) {
-	PrintFieldStart(fieldName);
-	ConsoleOut_WriteChar(L'$');
-	ConsoleOut_WriteAlignedDouble(fieldValue, FieldContentSize - 1, 2, ALIGN_LEFT);
-	PrintFieldEnd();
+	ConsoleOut_WriteFormat(_T("║ %s: $%s ║"),
+		SF_Align(fieldName, 8, ALIGN_RIGHT),
+		SF_AlignF(FieldContentSize - 1, ALIGN_LEFT, _T("%.2f"), fieldValue)
+	);
 }
 
 static void PrintQuantityField(TSTR fieldName, UINT fieldValue) {
-	PrintFieldStart(fieldName);
-	ConsoleOut_WriteAlignedUInt(fieldValue, FieldContentSize, ALIGN_LEFT);
-	PrintFieldEnd();
+	ConsoleOut_WriteFormat(_T("║ %s: %s ║"),
+		SF_Align(fieldName, 8, ALIGN_RIGHT),
+		SF_AlignF(FieldContentSize, ALIGN_LEFT, _T("%d"), fieldValue)
+	);
 }
 
 static void PrintFieldRow(TSTR moneyFieldName, double moneyFieldValue, TSTR quantityFieldName, UINT quantityFieldValue) {
