@@ -3,18 +3,21 @@
 #include "StringMap.h"
 #include "ConsoleStyle.h"
 #include "OrderList.h"
+#include "WarnIgnore.h"
 
 #define TableCount 8
 #define LastTableI (TableCount - 1)
 #define TableOccupiedColor BACKGROUND_RED
 #define TableAvailableColor BACKGROUND_GREEN
 
+WarnIgnore_AddedPadding_S
 // Información de una mesa.
 typedef struct Table {
 	UINT id;
-	float moneySpent;
+	double moneySpent;
 	LLOrder* orderList;
 } Table;
+WarnIgnore_AddedPadding_E
 
 // Obtiene la cantidad de ordenes abiertas actualmente.
 UINT Orders_GetOpenCount(void);
