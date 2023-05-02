@@ -147,10 +147,11 @@ void HandleStrOptions(TSTR inputBuf, size_t bufSize, const OptionGroup* optionGr
 
 void HandleStrOptionsExtra(TSTR inputBuf, size_t bufSize, const OptionGroup* optionGroup, OptionHandler optionHandler, _Inout_opt_ void* extraInfo) {
 	PrintOptions(optionGroup);
+	bool inputIsChar = (bufSize == 1);
 	Action navAction;
 	do {
 		OptionInput optionInput = { 0 };
-		if (bufSize == 1) {
+		if (inputIsChar) {
 			optionInput.single = GetOptionSubmit();
 		} else {
 			AssertNotNull(inputBuf);
@@ -163,7 +164,8 @@ void HandleStrOptionsExtra(TSTR inputBuf, size_t bufSize, const OptionGroup* opt
 		if (isValidOption) break;
 		else PrintSubmittedInvalidOption(errorMsg);
 	} while (true);
-	ConsoleOut_Backspace();
+	if (inputIsChar) ConsoleOut_Backspace();
+	else ConsoleOut_BackspaceRepeat(bufSize - 1);
 	Action_TryExecute(navAction);
 }
 
