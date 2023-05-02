@@ -68,5 +68,8 @@ void ConsoleOut_NewLineRepeat(size_t repeatCount);
 // Simula la pulsación de retroceso.
 void ConsoleOut_Backspace(void);
 
+// Simula la pulsación de retroceso la cantidad de veces indicada.
+void ConsoleOut_BackspaceRepeat(size_t repeatCount);
+
 // Limpia la consola.
 void ConsoleOut_Clear(void);
