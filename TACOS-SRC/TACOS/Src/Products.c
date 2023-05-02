@@ -17,3 +17,14 @@ ProductInfo Products_GetProductInfo(size_t index) {
 	Array_IsInBounds(index, Products_TypesCount);
 	return Products[index];
 }
+
+_Success_(OnTrueReturn) bool Products_TryGetIndexByCode(SalExt_Str_In_NotNull_ TSTR code, _Out_ size_t* index) {
+	for (size_t productI = 0; productI < Products_TypesCount; productI++) {
+		TSTR prodCode = Products[productI].code;
+		if (TStrCmp(prodCode, code) == 0) {
+			*index = productI;
+			return true;
+		}
+	}
+	return false;
+}
