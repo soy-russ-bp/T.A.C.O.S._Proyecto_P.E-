@@ -79,6 +79,10 @@ void ConsoleOut_Backspace(void) {
 	ConsoleOut_Write(_T("\b \b"));
 }
 
+void ConsoleOut_BackspaceRepeat(size_t repeatCount) {
+	while (repeatCount--) ConsoleOut_Backspace();
+}
+
 void ConsoleOut_Clear(void) {
 	system("cls");
 }
