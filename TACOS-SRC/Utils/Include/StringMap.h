@@ -15,3 +15,4 @@ typedef TCHAR* TSTR;
 
 // - Funciones - //
 #define TStrLen _tcslen
+#define TStrCmp _tcscmp
