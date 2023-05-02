@@ -1,5 +1,6 @@
 ﻿#include "ModifyOrder.h"
 #include "ConsoleOut.h"
+#include "ConsoleStyle.h"
 #include "ConsoleCursor.h"
 #include "ArrayUtils.h"
 #include "TableSelection.h"
@@ -7,9 +8,17 @@
 #include "Orders.h"
 #include "Products.h"
 
-static const TSTR ModifyOrderOptionsList[] = { _T("Añadir producto"), _T("Eliminar producto") };
-static const OptionGroup ModifyOrderOptions = { StaticArrayAndLength(ModifyOrderOptionsList), OTReturn };
+static const TSTR SelectOperationOptionsList[] = { _T("Añadir producto"), _T("Eliminar producto") };
+static const OptionGroup SelectOperationOptions = { StaticArrayAndLength(SelectOperationOptionsList), OTReturn };
+typedef enum ModOperation {
+	MOAdd, MORemove, MOExit
+} ModOperation;
 
+static const TSTR AddProductOptionsList[] = { _T("~#Códdigo de producto"), _T("~#CCC   (Cancelar)") };
+static const OptionGroup AddProductOptions = { StaticArrayAndLength(AddProductOptionsList), OTReturn };
+
+#define ProductCodeLen (3)
+#define ProductCodeBufSize (ProductCodeLen + 1)
 #define ProductCellWidth (18)
 #define RepBar(count) SF_Repeat(L'═', count)
 #define FooterSeparatorRowI (18)
@@ -62,6 +71,16 @@ static void PrintMenuRow(size_t productI, SHORT rowI) {
 		product.price
 	);
 }
+
+static void HighlightMenuRow(size_t productI) {
+	COORD oldCursorPos = ConsoleCursor_GetPos();
+	ConsoleStyle oldStyle = ConsoleStyle_GetSet(BACKGROUND_GREEN | FOREGROUND_WHITE);
+	SHORT rowI = (SHORT)(5 + (productI * 2));
+	PrintMenuRow(productI, rowI);
+	ConsoleCursor_SetPos(oldCursorPos);
+	ConsoleStyle_Set(oldStyle);
+}
+
 static void PrintListRow(LLOrder* orderList, size_t productI) {
 	if (!Array_IsInBounds(productI, orderList->count)) {
 		ConsoleOut_WriteFormat(_T("%s║%s"), SF_Repeat(L'▒', 18), SF_Repeat(L'▒', 5));
@@ -85,14 +104,34 @@ static void PrintModifyOrderMenu(int tableNum, Table* table) {
 	PrintHorizontalSeparator(FooterSeparatorRowI);
 }
 
-static bool ModifyOrderOptionHandler(OptionHandlerArgs) {
+static bool SelectOperationOptionHandler(OptionHandlerArgs) {
 	WarnIgnore_UnusedVar(navAction);
 	WarnIgnore_UnusedVar(errorMsg);
-	WarnIgnore_UnusedVar(extraInfo);
 	TCHAR option = optionInput.single;
-	if (option == 'R') {
+	switch (option) {
+		case 'A': case 'E':
+			ModOperation* modOp = ((ModOperation*)extraInfo);
+			AssertNotNull(modOp);
+			ModOperation operation = (option == 'A') ? MOAdd : MORemove;
+			*modOp = operation;
+			return true;
+		case 'R':
+			return true;
+	}
+	return false;
+}
+
+static bool AddProductOptionHandler(OptionHandlerArgs) {
+	WarnIgnore_UnusedVar(navAction);
+	WarnIgnore_UnusedVar(extraInfo);
+	TSTR inputCode = optionInput.string;
+	if (TStrCmp(inputCode, _T("CCC")) == 0) return true;
+	size_t productI;
+	if (Products_TryGetIndexByCode(inputCode, &productI)) {
+		HighlightMenuRow(productI);
 		return true;
 	}
+	*errorMsg = _T("Código invalido");
 	return false;
 }
 
@@ -100,6 +139,22 @@ void ModifyOrder_Menu(void) {
 	int selectedTable = TableSelection_Menu(true);
 	if (selectedTable == 0) return;
 	Table* table = Orders_GetTableByNum((size_t)selectedTable);
-	PrintModifyOrderMenu(selectedTable, table);
-	HandleOptions(&ModifyOrderOptions, ModifyOrderOptionHandler);
+	do {
+		PrintModifyOrderMenu(selectedTable, table);
+		ModOperation modOperation = MOExit;
+		HandleOptionsExtra(&SelectOperationOptions, SelectOperationOptionHandler, &modOperation);
+		switch (modOperation) {
+			case MOExit:
+				return; // TODO: Confirm changes (if any)
+			case MOAdd:
+				TCHAR code[ProductCodeBufSize];
+				HandleStrOptions(StaticArrayAndLength(code), &AddProductOptions, AddProductOptionHandler);
+				break;
+			case MORemove:
+
+				break;
+			default:
+				Throw("Invalid mod operation");
+		}
+	} while (true);
 }
