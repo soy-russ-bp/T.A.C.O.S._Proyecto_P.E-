@@ -5,7 +5,7 @@
 
 // Elemento de una orden.
 typedef struct OrderElement {
-	ProductInfo product;
+	const ProductInfo* product;
 	size_t count;
 } OrderElement;
 
