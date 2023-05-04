@@ -145,13 +145,12 @@ static bool AddProductOptionHandler(OptionHandlerArgs) {
 	size_t menuProdI;
 	const ProductInfo* menuProd;
 	if (Products_TryGetByCode(inputCode, &menuProdI, &menuProd)) {
-		HighlightMenuRow(menuProdI);
-		size_t ordenProdI;
-		LLOrderNode* orderElement;
 		AssertNotNull(extraInfo);
 		LLOrder* selectedOrder = ((LLOrder*)extraInfo);
+		HighlightMenuRow(menuProdI);
+		LLOrderNode* orderElement;
 		void* menuProdAsInfo = WarnIgnore_CastDropQualifiers((void*)menuProd);
-		if ((selectedOrder->count > 0) && LLOrder_TryFind(selectedOrder, SearchForProduct, menuProdAsInfo, &ordenProdI, &orderElement)) {
+		if ((selectedOrder->count > 0) && LLOrder_TryFind(selectedOrder, SearchForProduct, menuProdAsInfo, NULL, &orderElement)) {
 			orderElement->data.count++;
 		} else {
 			OrderElement newOrderElement = { menuProd, 1 };
