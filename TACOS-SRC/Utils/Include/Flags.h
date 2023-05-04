@@ -1,5 +1,4 @@
 #pragma once // NOLINT
-#include "SysArch.h"
 
 #ifndef __clang_analyzer__
 // Módulo: Flags.h
@@ -7,15 +6,19 @@
 #endif
 
 #ifdef __clang_analyzer__
-#pragma clang diagnostic ignored "-Wpragma-once-outside-header"
-#pragma clang diagnostic ignored "-Wempty-translation-unit"
-#pragma clang diagnostic ignored "-Wdeclaration-after-statement"
-#pragma clang diagnostic ignored "-Wunused-parameter"
-#pragma clang diagnostic ignored "-Wunused-macros"
-#pragma clang diagnostic ignored "-Wswitch-enum"
-#pragma clang diagnostic ignored "-Wcovered-switch-default"
-#pragma clang diagnostic ignored "-Winvalid-utf8"
+#define ClangDiagnostic(exp) __pragma(clang diagnostic exp)
+#else
+#define ClangDiagnostic(exp)
 #endif
+
+ClangDiagnostic(ignored "-Wpragma-once-outside-header")
+ClangDiagnostic(ignored "-Wempty-translation-unit")
+ClangDiagnostic(ignored "-Wdeclaration-after-statement")
+ClangDiagnostic(ignored "-Wunused-parameter")
+ClangDiagnostic(ignored "-Wunused-macros")
+ClangDiagnostic(ignored "-Wswitch-enum")
+ClangDiagnostic(ignored "-Wcovered-switch-default")
+ClangDiagnostic(ignored "-Winvalid-utf8")
 
 #ifdef _MSC_VER
 #pragma warning( disable : 5045 ) // Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
@@ -24,6 +27,7 @@
 #error Compatible únicamente con MSVC
 #endif
 
+#include "SysArch.h"
 #include "GlobalDefines.h"
 
 #ifdef WidePrint
