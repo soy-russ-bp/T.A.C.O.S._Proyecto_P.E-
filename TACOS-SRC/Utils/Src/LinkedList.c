@@ -13,6 +13,10 @@
 
 #ifdef GDEF
 
+#define LLAllocNodeFName AddLLPrefix(AllocNode)
+#define LLCreateNodeFName AddLLPrefix(CreateNode)
+#define LLUpdateTailFName AddLLPrefix(UpdateTail)
+
 // Asigna memoria a un nodo.
 static LLNodeName* LLAllocNodeFName(GTYPE data) {
 	LLNodeName* newNode;
@@ -68,6 +72,19 @@ void LLClearFName(_In_ LLName* list) {
 bool LLIterateFName(_In_ LLName* list, _Inout_ LLNodeName** currentNode) {
 	*currentNode = (*currentNode == NULL) ? list->head : (*currentNode)->next;
 	return (*currentNode != NULL);
+}
+
+_Success_(OnTrueReturn) bool LLTryFindName(_In_ LLName* list, LLSearchPredicate searchFunc, _Inout_ void* extraInfo, _Out_ size_t* nodeIndex, _Out_ LLNodeName** node) {
+	LLNodeName* currentNode = NULL;
+	size_t index = 0;
+	while (LLIterateFName(list, &currentNode)) {
+		if (searchFunc(&currentNode->data, index, extraInfo)) {
+			*nodeIndex = index;
+			*node = currentNode;
+			return true;
+		}
+	}
+	return false;
 }
 
 void LLPrependFName(_In_ LLName* list, GTYPE data) {
