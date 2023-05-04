@@ -14,7 +14,7 @@ typedef enum ModOperation {
 	MOAdd, MORemove, MOExit
 } ModOperation;
 
-static const TSTR AddProductOptionsList[] = { _T("~#Códdigo de producto"), _T("~#CCC   (Cancelar)") };
+static const TSTR AddProductOptionsList[] = { _T("~#Códdigo de producto"), _T("~#CCC (Cancelar)") };
 static const OptionGroup AddProductOptions = { StaticArrayAndLength(AddProductOptionsList), OTReturn };
 
 #define ProductCodeLen (3)
@@ -64,11 +64,11 @@ static void PrintMenuHeader(int tableNum, double total) {
 
 static void PrintMenuRow(size_t productI, SHORT rowI) {
 	ConsoleCursor_SetPos2(0, rowI);
-	ProductInfo product = Products_GetProductInfo(productI);
+	const ProductInfo* product = Products_GetProductInfo(productI);
 	ConsoleOut_WriteFormat(_T("║ %s ║%s║%.2f║"),
-		product.code,
-		SF_Align(product.name, ProductCellWidth, ALIGN_CENTER),
-		product.price
+		product->code,
+		SF_Align(product->name, ProductCellWidth, ALIGN_CENTER),
+		product->price
 	);
 }
 
@@ -81,25 +81,37 @@ static void HighlightMenuRow(size_t productI) {
 	ConsoleStyle_Set(oldStyle);
 }
 
-static void PrintListRow(LLOrder* orderList, size_t productI) {
-	if (!Array_IsInBounds(productI, orderList->count)) {
-		ConsoleOut_WriteFormat(_T("%s║%s"), SF_Repeat(L'▒', 18), SF_Repeat(L'▒', 5));
-		return;
+static void PrintListRow(_In_opt_ OrderElement* orderElement) {
+	TSTR cellA;
+	TSTR cellB;
+	if (orderElement == NULL) {
+		cellA = SF_Repeat(L'▒', 18);
+		cellB = SF_Repeat(L'▒', 5);
+	} else {
+		cellA = SF_Align(orderElement->product->name, 18, ALIGN_CENTER);
+		cellB = SF_AlignF(5, ALIGN_CENTER, _T("%d"), orderElement->count);
 	}
+	ConsoleOut_WriteFormat(_T("%s║%s"), cellA, cellB);
 }
 
-static void PrintProductRow(Table* table, size_t productI, SHORT rowI) {
+static void PrintProductRow(_In_opt_ OrderElement* orderElement, size_t productI, SHORT rowI) {
 	PrintMenuRow(productI, rowI);
 	ConsoleOut_Write(_T("╳╳║"));
-	PrintListRow(table->orderList, productI);
+	PrintListRow(orderElement);
 }
 
 static void PrintModifyOrderMenu(int tableNum, Table* table) {
 	PrintMenuHeader(tableNum, table->moneySpent);
+	LLOrder* order = table->orderList;
+	LLOrderNode* orderElement = NULL;
+	bool orderEndReached = false;
 	SHORT printRowI = 4;
 	for (size_t productI = 0; productI < Products_TypesCount; productI++) {
 		PrintHorizontalSeparator(printRowI++);
-		PrintProductRow(table, productI, printRowI++);
+		orderEndReached = orderEndReached || !LLOrder_Iterate(order, &orderElement);
+		OrderElement* orderElementData = (orderElement == NULL) ? NULL : &orderElement->data;
+		PrintProductRow(orderElementData, productI, printRowI++);
+		if (orderEndReached) orderElement = NULL;
 	}
 	PrintHorizontalSeparator(FooterSeparatorRowI);
 }
@@ -110,10 +122,9 @@ static bool SelectOperationOptionHandler(OptionHandlerArgs) {
 	TCHAR option = optionInput.single;
 	switch (option) {
 		case 'A': case 'E':
-			ModOperation* modOp = ((ModOperation*)extraInfo);
-			AssertNotNull(modOp);
+			AssertNotNull(extraInfo);
 			ModOperation operation = (option == 'A') ? MOAdd : MORemove;
-			*modOp = operation;
+			*((ModOperation*)extraInfo) = operation;
 			return true;
 		case 'R':
 			return true;
@@ -121,14 +132,31 @@ static bool SelectOperationOptionHandler(OptionHandlerArgs) {
 	return false;
 }
 
+static bool SearchForProduct(_In_ OrderElement* data, size_t index, _Inout_ void* extraInfo) {
+	WarnIgnore_UnusedVar(index);
+	const ProductInfo* menuProd = ((const ProductInfo*)extraInfo);
+	return menuProd->code == data->product->code;
+}
+
 static bool AddProductOptionHandler(OptionHandlerArgs) {
 	WarnIgnore_UnusedVar(navAction);
-	WarnIgnore_UnusedVar(extraInfo);
 	TSTR inputCode = optionInput.string;
 	if (TStrCmp(inputCode, _T("CCC")) == 0) return true;
-	size_t productI;
-	if (Products_TryGetIndexByCode(inputCode, &productI)) {
-		HighlightMenuRow(productI);
+	size_t menuProdI;
+	const ProductInfo* menuProd;
+	if (Products_TryGetByCode(inputCode, &menuProdI, &menuProd)) {
+		HighlightMenuRow(menuProdI);
+		size_t ordenProdI;
+		LLOrderNode* orderElement;
+		AssertNotNull(extraInfo);
+		LLOrder* selectedOrder = ((LLOrder*)extraInfo);
+		void* menuProdAsInfo = WarnIgnore_CastDropQualifiers((void*)menuProd);
+		if ((selectedOrder->count > 0) && LLOrder_TryFind(selectedOrder, SearchForProduct, menuProdAsInfo, &ordenProdI, &orderElement)) {
+			orderElement->data.count++;
+		} else {
+			OrderElement newOrderElement = { menuProd, 1 };
+			LLOrder_Append(selectedOrder, newOrderElement);
+		}
 		return true;
 	}
 	*errorMsg = _T("Código invalido");
@@ -148,7 +176,8 @@ void ModifyOrder_Menu(void) {
 				return; // TODO: Confirm changes (if any)
 			case MOAdd:
 				TCHAR code[ProductCodeBufSize];
-				HandleStrOptions(StaticArrayAndLength(code), &AddProductOptions, AddProductOptionHandler);
+				LLOrder* selectedOrder = table->orderList;
+				HandleStrOptionsExtra(StaticArrayAndLength(code), &AddProductOptions, AddProductOptionHandler, selectedOrder);
 				break;
 			case MORemove:
 
