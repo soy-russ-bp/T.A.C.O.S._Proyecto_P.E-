@@ -6,6 +6,12 @@
 
 #define WarnIgnore_UnusedVar(var) (void)(var)
 
+#define WarnIgnore_CastDropQualifiers(exp) \
+    ClangDiagnostic(push) \
+    ClangDiagnostic(ignored "-Wcast-qual") \
+    exp \
+    ClangDiagnostic(pop)
+
 #define WarnIgnore_Suppress(warnId) \
     __pragma(warning( suppress: warnId ))
 
