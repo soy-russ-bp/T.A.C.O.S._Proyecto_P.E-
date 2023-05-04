@@ -1,4 +1,4 @@
-//#define LinkedListEdit
+#define LinkedListEdit
 
 #if defined(LinkedListEdit) && !defined(LinkedListIgnoreEdit)
 #pragma message ( "LinkedList edit mode enabled!" )
@@ -74,13 +74,13 @@ bool LLIterateFName(_In_ LLName* list, _Inout_ LLNodeName** currentNode) {
 	return (*currentNode != NULL);
 }
 
-_Success_(OnTrueReturn) bool LLTryFindName(_In_ LLName* list, LLSearchPredicate searchFunc, _Inout_ void* extraInfo, _Out_ size_t* nodeIndex, _Out_ LLNodeName** node) {
+_Success_(OnTrueReturn) bool LLTryFindName(_In_ LLName* list, LLSearchPredicate searchFunc, _Inout_ void* extraInfo, _Out_opt_ size_t* nodeIndex, _Out_opt_ LLNodeName** node) {
 	LLNodeName* currentNode = NULL;
 	size_t index = 0;
 	while (LLIterateFName(list, &currentNode)) {
 		if (searchFunc(&currentNode->data, index, extraInfo)) {
-			*nodeIndex = index;
-			*node = currentNode;
+			if (nodeIndex != NULL) *nodeIndex = index;
+			if (node != NULL) *node = currentNode;
 			return true;
 		}
 	}

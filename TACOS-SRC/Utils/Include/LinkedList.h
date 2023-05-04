@@ -83,7 +83,7 @@ bool LLIterateFName(_In_ LLName* list, _Inout_ LLNodeName** currentNode);
 typedef bool(*LLSearchPredicate)(_In_ GTYPE* data, size_t index, _Inout_ void* extraInfo);
 
 // Busca entre los elementos de la lista.
-_Success_(OnTrueReturn) bool LLTryFindName(_In_ LLName* list, LLSearchPredicate searchFunc, _Inout_ void* extraInfo, _Out_ size_t* nodeIndex, _Out_ LLNodeName** node);
+_Success_(OnTrueReturn) bool LLTryFindName(_In_ LLName* list, LLSearchPredicate searchFunc, _Inout_ void* extraInfo, _Out_opt_ size_t* nodeIndex, _Out_opt_ LLNodeName** node);
 
 // Añade un elemento al principio de la lista.
 void LLPrependFName(_In_ LLName* list, GTYPE data);
