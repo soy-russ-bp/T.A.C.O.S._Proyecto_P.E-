@@ -14,8 +14,11 @@ typedef enum ModOperation {
 	MOAdd, MORemove, MOExit
 } ModOperation;
 
-static const TSTR AddProductOptionsList[] = { _T("~#Códdigo de producto"), _T("~#CCC (Cancelar)") };
-static const OptionGroup AddProductOptions = { StaticArrayAndLength(AddProductOptionsList), OTReturn };
+static const TSTR AddOrRemoveProductOptionsList[] = { _T("~#Código de producto"), _T("~#CCC (Cancelar)") };
+static const OptionGroup AddOrRemoveProductOptions = { StaticArrayAndLength(AddOrRemoveProductOptionsList), OTReturn };
+
+static const TSTR SelectAmountOptionsList[] = { _T("~#Cant. de producto"), _T("~#CCC (Cancelar)") };
+static const OptionGroup SelectAmountOptions = { StaticArrayAndLength(SelectAmountOptionsList), OTReturn };
 
 #define ProductCodeLen (3)
 #define ProductCodeBufSize (ProductCodeLen + 1)
@@ -125,6 +128,7 @@ static bool SelectOperationOptionHandler(OptionHandlerArgs) {
 			AssertNotNull(extraInfo);
 			ModOperation operation = (option == 'A') ? MOAdd : MORemove;
 			*((ModOperation*)extraInfo) = operation;
+			// TODO: MORemove: prod count 0 (LLOrder)
 			return true;
 		case 'R':
 			return true;
@@ -138,6 +142,12 @@ static bool SearchForProduct(_In_ OrderElement* data, size_t index, _Inout_ void
 	return menuProd->code == data->product->code;
 }
 
+typedef struct {
+	_In_ LLOrder* selectedOrder;
+	_In_ LLOrderNode* selectedProductToRemove;
+	_Out_ const ProductInfo* selectedMenuProduct;
+} ModProductInfo;
+
 static bool AddProductOptionHandler(OptionHandlerArgs) {
 	WarnIgnore_UnusedVar(navAction);
 	TSTR inputCode = optionInput.string;
@@ -146,20 +156,103 @@ static bool AddProductOptionHandler(OptionHandlerArgs) {
 	const ProductInfo* menuProd;
 	if (Products_TryGetByCode(inputCode, &menuProdI, &menuProd)) {
 		AssertNotNull(extraInfo);
-		LLOrder* selectedOrder = ((LLOrder*)extraInfo);
+		ModProductInfo* modProductInfo = ((ModProductInfo*)extraInfo);
+		modProductInfo->selectedMenuProduct = menuProd;
 		HighlightMenuRow(menuProdI);
-		LLOrderNode* orderElement;
-		void* menuProdAsInfo = WarnIgnore_CastDropQualifiers((void*)menuProd);
-		if ((selectedOrder->count > 0) && LLOrder_TryFind(selectedOrder, SearchForProduct, menuProdAsInfo, NULL, &orderElement)) {
-			orderElement->data.count++;
-		} else {
-			OrderElement newOrderElement = { menuProd, 1 };
-			LLOrder_Append(selectedOrder, newOrderElement);
-		}
 		return true;
 	}
 	*errorMsg = _T("Código invalido");
 	return false;
+}
+
+static bool RemoveProductOptionHandler(OptionHandlerArgs) {
+	WarnIgnore_UnusedVar(navAction);
+
+	AssertNotNull(extraInfo);
+	ModProductInfo* modProductInfo = ((ModProductInfo*)extraInfo);
+	LLOrder* selectedOrder = modProductInfo->selectedOrder;
+
+	TSTR inputCode = optionInput.string;
+	if (TStrCmp(inputCode, _T("CCC")) == 0) return true;
+
+	size_t menuProdI;
+	const ProductInfo* menuProd = modProductInfo->selectedMenuProduct;
+	if (Products_TryGetByCode(inputCode, &menuProdI, &menuProd)) {
+		void* menuProdAsInfo = WarnIgnore_CastDropQualifiers((void*)menuProd);
+		LLOrderNode* orderElement;
+		if (LLOrder_TryFind(selectedOrder, SearchForProduct, menuProdAsInfo, NULL, &orderElement)) {
+			//HighlightMenuRow(menuProdI);
+			modProductInfo->selectedProductToRemove = orderElement;
+			return true;
+		}
+		*errorMsg = _T("El producto debe estar en la orden");
+		return false;
+	}
+	*errorMsg = _T("Código invalido");
+	return false;
+	
+}
+
+static bool SelectAddAmountOptionHandler(OptionHandlerArgs) {
+	WarnIgnore_UnusedVar(navAction);
+	AssertNotNull(extraInfo);
+	ModProductInfo* modProductInfo = ((ModProductInfo*)extraInfo);
+	LLOrder* selectedOrder = modProductInfo->selectedOrder;
+
+	TSTR inputAmount = optionInput.string;
+	size_t amount = _tcstol(inputAmount, NULL, 10);
+
+	const ProductInfo* menuProd = modProductInfo->selectedMenuProduct;
+	void* menuProdAsInfo = WarnIgnore_CastDropQualifiers((void*)menuProd);
+
+	size_t amountTotal = amount;
+	LLOrderNode* orderElement = NULL;
+	if ((selectedOrder->count) > 0) {
+		LLOrder_TryFind(selectedOrder, SearchForProduct, menuProdAsInfo, NULL, &orderElement);
+		amountTotal += orderElement->data.count;
+	}
+	if (amount == 0) {
+		*errorMsg = _T("Cantidad invalida");
+		return false;
+	}
+	if (amountTotal > 25) {
+		*errorMsg = _T("Máx: 25");
+		return false;
+	}
+	if (orderElement != NULL) {
+		orderElement->data.count += amount;
+	} else {
+		OrderElement newOrderElement = { menuProd, amount };
+		LLOrder_Append(selectedOrder, newOrderElement);
+	}
+	return true;
+}
+
+static bool SelectRemoveAmountOptionHandler(OptionHandlerArgs) {
+	WarnIgnore_UnusedVar(navAction);
+	AssertNotNull(extraInfo);
+	ModProductInfo* modProductInfo = ((ModProductInfo*)extraInfo);
+	//LLOrder* selectedOrder = modProductInfo->selectedOrder;
+
+	TSTR inputAmount = optionInput.string;
+	int amount = _tcstol(inputAmount, NULL, 10);
+
+	LLOrderNode* prodToRemove = modProductInfo->selectedProductToRemove;
+	if ((int)prodToRemove->data.count - amount < 0) {
+		*errorMsg = _T("No se puede remover más productos de los que hay.");
+		return false;
+	}
+	return true;
+}
+
+static void GetContextOptionHandlers(ModOperation modOperation, OptionHandler** operationOptionHandler, OptionHandler** selectAmountOptionHandler) {
+	if (modOperation == MOAdd) {
+		*operationOptionHandler = AddProductOptionHandler;
+		*selectAmountOptionHandler = SelectAddAmountOptionHandler;
+	} else {
+		*operationOptionHandler = RemoveProductOptionHandler;
+		*selectAmountOptionHandler = SelectRemoveAmountOptionHandler;
+	}
 }
 
 void ModifyOrder_Menu(void) {
@@ -173,13 +266,15 @@ void ModifyOrder_Menu(void) {
 		switch (modOperation) {
 			case MOExit:
 				return; // TODO: Confirm changes (if any)
-			case MOAdd:
-				TCHAR code[ProductCodeBufSize];
-				LLOrder* selectedOrder = table->orderList;
-				HandleStrOptionsExtra(StaticArrayAndLength(code), &AddProductOptions, AddProductOptionHandler, selectedOrder);
-				break;
-			case MORemove:
-
+			case MOAdd: case MORemove:
+				TCHAR inputBuf[ProductCodeBufSize];
+				ModProductInfo selectedMenuProduct = {0};
+				selectedMenuProduct.selectedOrder = table->orderList;
+				OptionHandler* operationOptionHandler;
+				OptionHandler* selectAmountOptionHandler;
+				GetContextOptionHandlers(modOperation, &operationOptionHandler, &selectAmountOptionHandler);
+				HandleStrOptionsExtra(StaticArrayAndLength(inputBuf), &AddOrRemoveProductOptions, operationOptionHandler, &selectedMenuProduct);
+				HandleStrOptionsExtra(inputBuf, (size_t)(2 + 1), &SelectAmountOptions, selectAmountOptionHandler, &selectedMenuProduct);
 				break;
 			default:
 				Throw("Invalid mod operation");
