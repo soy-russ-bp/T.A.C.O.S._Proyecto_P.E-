@@ -18,9 +18,9 @@ static const COORD OptionWriteCursorPos = { 10, 28 };
 static const COORD MenuOptionsTitlePos = { OPT_AREA_X, OPT_AREA_Y };
 static const COORD MenuOptionsListPos = { OPT_AREA_X + 1, OPT_AREA_Y + 2 };
 static const COORD MenuOptionsExitPos = { OPT_AREA_X + 1, OPT_AREA_Y + 12 };
-static const int TitleLengthOffset = 4; // "◄ " + " ►"
+static const int TitleLengthOffset = StaticStrLength("◄  ►");
 #define ErrorMsgSeparator _T(" - ")
-#define ErrorMsgLenOffset 4 // (StaticStrlen(ErrorMsgSeparator) + 1)
+#define ErrorMsgLenOffset StaticStrLength(ErrorMsgSeparator)
 
 static void AddOptionGroupTitleLeftPad(TSTR title) {
 	size_t titleLength = TStrLen(title) + TitleLengthOffset;
@@ -112,13 +112,14 @@ static void PrintOptions(const OptionGroup* optionGroup) {
 	PrintOptionGroupOptions(optionGroup);
 }
 
-static void PrintSubmittedInvalidOption(_In_opt_ TSTR errorMsg) {
+static void PrintSubmittedInvalidOption(_In_opt_ TSTR errorMsg, size_t inputLen) {
 	if (errorMsg == NULL) errorMsg = InvalidOptionMsg;// TODO
 	ConsoleOut_Write(ErrorMsgSeparator);
 	ConsoleOut_WriteStyled(errorMsg, BrightBack(BACKGROUND_RED) | BrightFore(FOREGROUND_WHITE));
 	SleepSec(1.5);
 	ConsoleCursor_SetPos(OptionWriteCursorPos);
-	ConsoleOut_WriteCharRepeat(' ', TStrLen(errorMsg) + ErrorMsgLenOffset);
+	size_t clearLen = TStrLen(errorMsg) + ErrorMsgLenOffset + inputLen;
+	ConsoleOut_WriteCharRepeat(' ', clearLen);
 }
 
 static bool UpperLetterOrNumFilter(TCHAR* inputChPtr) {
@@ -148,6 +149,7 @@ void HandleStrOptions(TSTR inputBuf, size_t bufSize, const OptionGroup* optionGr
 void HandleStrOptionsExtra(TSTR inputBuf, size_t bufSize, const OptionGroup* optionGroup, OptionHandler optionHandler, _Inout_opt_ void* extraInfo) {
 	PrintOptions(optionGroup);
 	bool inputIsChar = (bufSize == 1);
+	size_t inputLen = (inputIsChar) ? 1 : bufSize - 1;
 	Action navAction;
 	do {
 		OptionInput optionInput = { 0 };
@@ -162,10 +164,9 @@ void HandleStrOptionsExtra(TSTR inputBuf, size_t bufSize, const OptionGroup* opt
 		TSTR errorMsg = NULL;
 		bool isValidOption = optionHandler(optionInput, &navAction, &errorMsg, extraInfo);
 		if (isValidOption) break;
-		else PrintSubmittedInvalidOption(errorMsg);
+		else PrintSubmittedInvalidOption(errorMsg, inputLen);
 	} while (true);
-	if (inputIsChar) ConsoleOut_Backspace();
-	else ConsoleOut_BackspaceRepeat(bufSize - 1);
+	ConsoleOut_BackspaceRepeat(inputLen);
 	Action_TryExecute(navAction);
 }
 
