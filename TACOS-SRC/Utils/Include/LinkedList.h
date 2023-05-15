@@ -44,6 +44,8 @@
 #define LLRemoveAtFName AddLLPrefix(RemoveAt)
 #define LLCwRotateFName AddLLPrefix(CwRotate)
 
+#define LL_IterateStart ((void*)(-1))
+
 WarnIgnore_AddedPadding_S
 // Nodo de una lista enlazada.
 // M1 - GTYPE  - data - Datos del elemento.
