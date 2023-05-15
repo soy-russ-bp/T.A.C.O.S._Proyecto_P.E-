@@ -1,4 +1,4 @@
-#define LinkedListEdit
+//#define LinkedListEdit
 
 #if defined(LinkedListEdit) && !defined(LinkedListIgnoreEdit)
 #pragma message ( "LinkedList edit mode enabled!" )
@@ -59,18 +59,20 @@ void LLDeleteFName(_In_ LLName* list) {
 }
 
 void LLClearFName(_In_ LLName* list) {
-	LLNodeName* node = list->head;
-	while (LLIterateFName(list, &node)) {
-		free(node->last);
+	LLNodeName* current = list->head;
+	while (current != NULL) {
+		LLNodeName* next = current->next;
+		free(current);
+		current = next;
 	}
-	free(list->tail);
 	list->head = NULL;
 	list->tail = NULL;
 	list->count = 0;
 }
 
 bool LLIterateFName(_In_ LLName* list, _Inout_ LLNodeName** currentNode) {
-	*currentNode = (*currentNode == NULL) ? list->head : (*currentNode)->next;
+	if (*currentNode == NULL) return false;
+	*currentNode = (*currentNode == LL_IterateStart) ? list->head : (*currentNode)->next;
 	return (*currentNode != NULL);
 }
 
