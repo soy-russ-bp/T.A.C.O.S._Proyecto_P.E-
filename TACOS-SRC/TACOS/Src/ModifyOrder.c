@@ -104,7 +104,7 @@ static void PrintProductRow(_In_opt_ OrderElement* orderElement, size_t productI
 }
 
 static void PrintModifyOrderMenu(int tableNum, Table* table) {
-	PrintMenuHeader(tableNum, table->moneySpent);
+	PrintMenuHeader(tableNum, Orders_GetTableOrderTotal(table));
 	LLOrder* order = table->orderList;
 	LLOrderNode* orderElement = NULL;
 	bool orderEndReached = false;

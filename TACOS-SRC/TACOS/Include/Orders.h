@@ -14,7 +14,6 @@ WarnIgnore_AddedPadding_S
 // Información de una mesa.
 typedef struct Table {
 	UINT id;
-	double moneySpent;
 	LLOrder* orderList;
 } Table;
 WarnIgnore_AddedPadding_E
@@ -34,11 +33,17 @@ bool Orders_IsValidTableNum(size_t tableNum);
 // Determina si la mesa esta ocupada.
 bool Orders_IsTableOccupied(_In_ Table* table);
 
+// Obtiene el total de la orden de una mesa.
+double Orders_GetTableOrderTotal(_In_ Table* table);
+
 // Obtiene el color para una mesa en base a su disponibilidad.
 ConsoleStyle Orders_GetTableStatusColor(_In_ Table* table);
 
 // Cierra una mesa.
 void Orders_CloseTable(_Inout_ Table* table);
+
+// Cancela una orden.
+void Orders_Cancel(_Inout_ Table* table);
 
 // Trata de asignar una mesa, abriendo una nueva orden.
 // La asignación será exitosa cuando tableNum sea un número de mesa valido y esta no este ocupada.
