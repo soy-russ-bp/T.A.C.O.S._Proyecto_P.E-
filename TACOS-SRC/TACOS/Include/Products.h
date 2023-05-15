@@ -7,6 +7,7 @@ typedef struct ProductInfo {
 	const TSTR code;
 	const TSTR name;
 	const double price;
+	const bool isDrink;
 } ProductInfo;
 
 extern const size_t Products_TypesCount;
