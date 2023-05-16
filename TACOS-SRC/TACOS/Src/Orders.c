@@ -69,12 +69,20 @@ double Orders_GetTableOrderTotal(_In_ Table* table) {
 	return total;
 }
 
+size_t Orders_GetTableOrderTotalItems(_In_ Table* table) {
+	size_t total = 0;
+	LLOrderNode* node = LL_IterateStart;
+	while (LLIterateFName(table->orderList, &node)) {
+		total += node->data.count;
+	}
+	return total;
+}
+
 ConsoleStyle Orders_GetTableStatusColor(_In_ Table* table) {
 	return Orders_IsTableOccupied(table) ? TableOccupiedColor : TableAvailableColor;
 }
 
 static void Orders_OpenTable(_Inout_ Table* table) {
-	// TODO
 	if (table->orderList == NULL) {
 		table->orderList = LLOrder_New();
 	}
