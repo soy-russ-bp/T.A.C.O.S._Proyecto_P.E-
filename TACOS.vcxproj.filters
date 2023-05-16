@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\TACOS">
+      <UniqueIdentifier>{35f0fd82-59da-4d26-897f-04abc73c5e28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\TACOS">
+      <UniqueIdentifier>{d46bf6a6-083d-4a94-b104-1b94c7f3dafa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utils">
+      <UniqueIdentifier>{022277de-6eb6-4e64-9856-c9d476567fc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils">
+      <UniqueIdentifier>{930b0e92-e518-40b3-bf43-6d1ec41a5b26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utils\Build">
+      <UniqueIdentifier>{315eb0de-57fd-4543-8f80-8b6db414ffa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utils\Console">
+      <UniqueIdentifier>{7b1ace5a-66ed-48c7-adde-f8ed0d041558}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils\Console">
+      <UniqueIdentifier>{90a6f487-180f-4b60-a91c-a3041ff6618e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TACOS-SRC\TACOS\Include\Main.h">
+      <Filter>Header Files\TACOS</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\TACOS\Include\MainMenu.h">
+      <Filter>Header Files\TACOS</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\TACOS\Include\SystemStart.h">
+      <Filter>Header Files\TACOS</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\AllocUtils.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\CharUtils.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\Exceptions.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\MathUtils.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\MsgBox.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\StringMap.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\Sleep.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\SysArch.h">
+      <Filter>Header Files\Utils\Build</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\Flags.h">
+      <Filter>Header Files\Utils\Build</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\ConsoleColors.h">
+      <Filter>Header Files\Utils\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\ConsoleConfig.h">
+      <Filter>Header Files\Utils\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\ConsoleCursor.h">
+      <Filter>Header Files\Utils\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\ConsoleIn.h">
+      <Filter>Header Files\Utils\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\ConsoleOut.h">
+      <Filter>Header Files\Utils\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\ConsoleSize.h">
+      <Filter>Header Files\Utils\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\ConsoleStyle.h">
+      <Filter>Header Files\Utils\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\ConsoleWidePrint.h">
+      <Filter>Header Files\Utils\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\ArrayUtils.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\MacroUtils.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\TACOS\Include\Orders.h">
+      <Filter>Header Files\TACOS</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\TACOS\Include\Sounds.h">
+      <Filter>Header Files\TACOS</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\TACOS\Include\Logo.h">
+      <Filter>Header Files\TACOS</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\TACOS\Include\SystemEnd.h">
+      <Filter>Header Files\TACOS</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\Beep.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\TACOS\Include\Options.h">
+      <Filter>Header Files\TACOS</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\TextLayout.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\TACOS\Include\NewOrder.h">
+      <Filter>Header Files\TACOS</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\GlobalIncludes.h">
+      <Filter>Header Files\Utils\Build</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\GlobalDefines.h">
+      <Filter>Header Files\Utils\Build</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\SalExt.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\TACOS\Include\TableSelection.h">
+      <Filter>Header Files\TACOS</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\Action.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\LinkedList.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\MemUtils.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\WarnIgnore.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\TACOS\Include\CloseOrder.h">
+      <Filter>Header Files\TACOS</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\TACOS\Include\ModifyOrder.h">
+      <Filter>Header Files\TACOS</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\TACOS\Include\DaySummary.h">
+      <Filter>Header Files\TACOS</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\Utils\Include\StrFormat.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\TACOS\Include\OrderList.h">
+      <Filter>Header Files\TACOS</Filter>
+    </ClInclude>
+    <ClInclude Include="TACOS-SRC\TACOS\Include\Products.h">
+      <Filter>Header Files\TACOS</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="TACOS-SRC\TACOS\Src\Main.c">
+      <Filter>Source Files\TACOS</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\TACOS\Src\MainMenu.c">
+      <Filter>Source Files\TACOS</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\TACOS\Src\Orders.c">
+      <Filter>Source Files\TACOS</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\TACOS\Src\SystemStart.c">
+      <Filter>Source Files\TACOS</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\Utils\Src\CharUtils.c">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\Utils\Src\MathUtils.c">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\Utils\Src\MsgBox.c">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\Utils\Src\ConsoleWidePrint.c">
+      <Filter>Source Files\Utils\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\Utils\Src\ConsoleConfig.c">
+      <Filter>Source Files\Utils\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\Utils\Src\ConsoleCursor.c">
+      <Filter>Source Files\Utils\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\Utils\Src\ConsoleOut.c">
+      <Filter>Source Files\Utils\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\Utils\Src\ConsoleIn.c">
+      <Filter>Source Files\Utils\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\Utils\Src\ConsoleSize.c">
+      <Filter>Source Files\Utils\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\Utils\Src\ConsoleStyle.c">
+      <Filter>Source Files\Utils\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\Utils\Src\ArrayUtils.c">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\TACOS\Src\Sounds.c">
+      <Filter>Source Files\TACOS</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\TACOS\Src\Logo.c">
+      <Filter>Source Files\TACOS</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\TACOS\Src\SystemEnd.c">
+      <Filter>Source Files\TACOS</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\TACOS\Src\Options.c">
+      <Filter>Source Files\TACOS</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\Utils\Src\TextLayout.c">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\TACOS\Src\NewOrder.c">
+      <Filter>Source Files\TACOS</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\TACOS\Src\TableSelection.c">
+      <Filter>Source Files\TACOS</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\Utils\Src\Action.c">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\Utils\Src\LinkedList.c">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\TACOS\Src\CloseOrder.c">
+      <Filter>Source Files\TACOS</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\TACOS\Src\ModifyOrder.c">
+      <Filter>Source Files\TACOS</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\TACOS\Src\DaySummary.c">
+      <Filter>Source Files\TACOS</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\Utils\Src\StrFormat.c">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\TACOS\Src\Products.c">
+      <Filter>Source Files\TACOS</Filter>
+    </ClCompile>
+    <ClCompile Include="TACOS-SRC\TACOS\Src\OrderList.c">
+      <Filter>Source Files\TACOS</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+    <None Include="cpp.hint" />
+  </ItemGroup>
+</Project>
