@@ -3,8 +3,11 @@
 #include "Exceptions.h"
 #include "MathUtils.h"
 
-// Total del día.
-static double DayTotal;
+// Subtotal del día (no incluye propina).
+static double DaySubtotal;
+
+// Propina del día.
+static double DayTips;
 
 // Total de ordenes que se han abierto.
 static UINT TotalOrderCount;
@@ -15,8 +18,28 @@ static UINT OpenOrderCount;
 // Arreglo de las mesas.
 static Table Tables[TableCount];
 
+double Orders_GetDaySubtotal(void) {
+	return DaySubtotal;
+}
+
+double Orders_GetDayTips(void) {
+	return DayTips;
+}
+
+double Orders_GetDayTotal(void) {
+	return DaySubtotal + DayTips;
+}
+
+UINT Orders_GetTotalOrderCount(void) {
+	return TotalOrderCount;
+}
+
 UINT Orders_GetOpenCount(void) {
 	return OpenOrderCount;
+}
+
+UINT Orders_GetTotalClosedCount(void) {
+	return TotalOrderCount - OpenOrderCount;
 }
 
 Table* Orders_GetTableByIndex(size_t tableI) {
@@ -62,11 +85,18 @@ static void Orders_OpenTable(_Inout_ Table* table) {
 static void Orders_ClearTable(Table* table) {
 	table->id = 0;
 	LLOrder_Clear(table->orderList);
+	OpenOrderCount--;
+}
+
+double Orders_GetTipAmount(double subtotal) {
+	return (subtotal * TipPercentage) / 100;
 }
 
 void Orders_CloseTable(_Inout_ Table* table) {
+	double orderSubtotal = Orders_GetTableOrderTotal(table);
+	DaySubtotal += orderSubtotal;
+	DayTips += Orders_GetTipAmount(orderSubtotal);
 	Orders_ClearTable(table);
-	DayTotal += Orders_GetTableOrderTotal(table);
 }
 
 void Orders_Cancel(_Inout_ Table* table) {
