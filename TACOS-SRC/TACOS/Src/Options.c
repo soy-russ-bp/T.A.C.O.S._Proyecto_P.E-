@@ -18,7 +18,7 @@ static const COORD OptionWriteCursorPos = { 10, 28 };
 static const COORD MenuOptionsTitlePos = { OPT_AREA_X, OPT_AREA_Y };
 static const COORD MenuOptionsListPos = { OPT_AREA_X + 1, OPT_AREA_Y + 2 };
 static const COORD MenuOptionsExitPos = { OPT_AREA_X + 1, OPT_AREA_Y + 12 };
-static const int TitleLengthOffset = StaticStrLength("◄  ►");
+static const int TitleLengthOffset = StaticStrLength(_T("◄  ►"));
 #define ErrorMsgSeparator _T(" - ")
 #define ErrorMsgLenOffset StaticStrLength(ErrorMsgSeparator)
 
@@ -54,8 +54,9 @@ static void GetOptionGroupOptionDisplay(_Out_ TCHAR* ch, _Inout_ TSTR* text) {
 	}
 }
 
-static void ClearLastOptionLinePrint(TSTR option) {
-	size_t lenToClear = OptionMaxLen - TStrLen(option);
+static void ClearLastOptionLinePrint(_In_opt_ TSTR option) {
+	size_t lenToClear = OptionMaxLen;
+	if (option != NULL) lenToClear -= TStrLen(option);
 	ConsoleOut_WriteCharRepeatStyled(' ', lenToClear, FOREGROUND_WHITE);
 }
 
@@ -77,7 +78,11 @@ static TSTR TryGetOptionGroupTypeOption(OptionType optionType) {
 
 static void PrintOptionGroupTypeOption(OptionType optionType) {
 	TSTR typeOpt = TryGetOptionGroupTypeOption(optionType);
-	if (typeOpt == NULL) return;
+	if (typeOpt == NULL) {
+		ConsoleCursor_SetPos(MenuOptionsExitPos);
+		ClearLastOptionLinePrint(typeOpt);
+		return;
+	}
 	ConsoleStyle_Set(BrightBack(BACKGROUND_RED) | FOREGROUND_BRIGHT_YELLOW);
 	PrintOptionGroupOptionLine(typeOpt, MenuOptionsExitPos);
 }
@@ -113,7 +118,7 @@ static void PrintOptions(const OptionGroup* optionGroup) {
 }
 
 static void PrintSubmittedInvalidOption(_In_opt_ TSTR errorMsg, size_t inputLen) {
-	if (errorMsg == NULL) errorMsg = InvalidOptionMsg;// TODO
+	if (errorMsg == NULL) errorMsg = InvalidOptionMsg;
 	ConsoleOut_Write(ErrorMsgSeparator);
 	ConsoleOut_WriteStyled(errorMsg, BrightBack(BACKGROUND_RED) | BrightFore(FOREGROUND_WHITE));
 	SleepSec(1.5);
