@@ -116,27 +116,43 @@ static void PrintFieldHeaders(void) {
 }
 
 static void PrintTotalProductTypeAmount(SHORT offsetX, SHORT offsetY, TSTR title, size_t amount) {
-	ConsoleCursor_SetPos2(35 + offsetX, 6 + offsetY);
+	ConsoleCursor_SetPos2(35 + offsetX, 8 + offsetY);
 	ConsoleOut_WriteFormat(_T("%s: %d"), title, (int)amount);
 }
 
-static size_t GetDrinkCountInOrder(LLOrder* orderList) {
-	size_t drinkCount = 0;
+static void GetTypesCountInOrder(_In_ LLOrder* orderList, _Out_ size_t* tacoCount, _Out_ size_t* drinkCount) {
+	*tacoCount = 0;
+	*drinkCount = 0;
 	LLOrderNode* node = LL_IterateStart;
 	while (LLIterateFName(orderList, &node)) {
-		if (node->data.product->isDrink) drinkCount++;
+		OrderElement element = node->data;
+		size_t elementAmount = element.count;
+		if (!element.product->isDrink) {
+			*tacoCount += elementAmount;
+		} else {
+			*drinkCount += elementAmount;
+		}
 	}
-	return drinkCount;
+}
+
+static void PrinTotalProductTypes(LLOrder* orderList) {
+	PrintTotalProductTypeAmount(0, 0, _T("Total de prods"), orderList->count);
+	size_t tacoCount, drinkCount;
+	GetTypesCountInOrder(orderList, &tacoCount, &drinkCount);
+	PrintTotalProductTypeAmount(1, 1, _T("Tacos"), tacoCount);
+	PrintTotalProductTypeAmount(1, 2, _T("Bebidas"), drinkCount);
 }
 
 static void PrintTotalPanel(Table* table) {
+	double subtotal = Orders_GetTableOrderTotal(table);
+	double tipAmount = Orders_GetTipAmount(subtotal);
 	ConsoleCursor_SetPos2(35, 4);
-	ConsoleOut_WriteFormat(_T("Total: %.2f"), Orders_GetTableOrderTotal(table));
-	PrintTotalProductTypeAmount(0, 0, _T("Total de prods"), table->orderList->count);
-	size_t drinkCount = GetDrinkCountInOrder(table->orderList);
-	size_t tacosCount = table->orderList->count - drinkCount;
-	PrintTotalProductTypeAmount(1, 1, _T("Tacos"), tacosCount);
-	PrintTotalProductTypeAmount(1, 2, _T("Bebidas"), drinkCount);
+	ConsoleOut_WriteFormat(_T("    Subtotal: %.2f"), subtotal);
+	ConsoleCursor_SetPos2(35, 5);
+	ConsoleOut_WriteFormat(_T("Propina (%%%d): %.2f"), TipPercentage, tipAmount);
+	ConsoleCursor_SetPos2(35, 6);
+	ConsoleOut_WriteFormat(_T("       Total: %.2f"), subtotal + tipAmount);
+	PrinTotalProductTypes(table->orderList);
 }
 
 static void PrintCloseOrderMenu(Table* table) {
