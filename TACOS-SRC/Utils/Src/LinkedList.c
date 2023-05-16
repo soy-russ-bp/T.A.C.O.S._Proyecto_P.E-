@@ -85,6 +85,7 @@ _Success_(OnTrueReturn) bool LLTryFindName(_In_ LLName* list, LLSearchPredicate 
 			if (node != NULL) *node = currentNode;
 			return true;
 		}
+		index++;
 	}
 	return false;
 }
