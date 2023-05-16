@@ -26,7 +26,13 @@ static void PrintOrderInfo(size_t orderI) {
 	Table* table = Orders_GetTableByIndex(orderI);
 	if (Orders_IsTableOccupied(table)) {
 		ConsoleOut_WriteAlignedUInt(table->id, 9, ALIGN_CENTER);
-		ConsoleOut_WriteLine(_T("║  Consumo: $0000.00  /  Cant art: 00  ║╳║                           ║"));
+		double totalSpent = Orders_GetTableOrderTotal(table);
+		size_t totalItems = Orders_GetTableOrderTotalItems(table);
+		ConsoleOut_WriteFormat(_T("║  Cons: $%s  /  Cant art: %s  ║╳║%s║\n"),
+			SF_AlignF(9, ALIGN_LEFT, _T("%.2f"), totalSpent),
+			SF_AlignF(3, ALIGN_LEFT, _T("%d"), totalItems),
+			SF_Repeat(' ', 27)
+		);
 	} else {
 		ConsoleOut_WriteLine(_T("▒▒▒▒▒▒▒▒▒║▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒║╳║                           ║"));
 	}
