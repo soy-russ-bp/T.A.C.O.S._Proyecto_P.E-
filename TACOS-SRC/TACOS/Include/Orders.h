@@ -52,6 +52,9 @@ bool Orders_IsTableOccupied(_In_ Table* table);
 // Obtiene el total de la orden de una mesa.
 double Orders_GetTableOrderTotal(_In_ Table* table);
 
+// Obtiene el total de artículos de la orden de una mesa.
+size_t Orders_GetTableOrderTotalItems(_In_ Table* table);
+
 // Obtiene el color para una mesa en base a su disponibilidad.
 ConsoleStyle Orders_GetTableStatusColor(_In_ Table* table);
 
