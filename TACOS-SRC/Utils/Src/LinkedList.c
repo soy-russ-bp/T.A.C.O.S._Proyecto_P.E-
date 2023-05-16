@@ -77,7 +77,7 @@ bool LLIterateFName(_In_ LLName* list, _Inout_ LLNodeName** currentNode) {
 }
 
 _Success_(OnTrueReturn) bool LLTryFindName(_In_ LLName* list, LLSearchPredicate searchFunc, _Inout_ void* extraInfo, _Out_opt_ size_t* nodeIndex, _Out_opt_ LLNodeName** node) {
-	LLNodeName* currentNode = NULL;
+	LLNodeName* currentNode = LL_IterateStart;
 	size_t index = 0;
 	while (LLIterateFName(list, &currentNode)) {
 		if (searchFunc(&currentNode->data, index, extraInfo)) {
@@ -106,7 +106,7 @@ void LLAppendFName(_In_ LLName* list, GTYPE data) {
 }
 
 LLNodeName* LLGetNodeAtFName(_In_ LLName* list, size_t index) {
-	LLNodeName* node = NULL;
+	LLNodeName* node = LL_IterateStart;
 	for (size_t nodeI = 0; nodeI <= index; nodeI++) {
 		if (!LLIterateFName(list, &node)) {
 			Throw("Index out of bounds of the list");
@@ -127,6 +127,7 @@ void LLRemoveNodeFName(_In_ LLName* list, _In_ LLNodeName* node) {
 		list->tail = node->last;
 	}
 	list->count--;
+	Assert(node != LL_IterateStart, "Node was LL_IterateStart");
 	free(node);
 }
 
