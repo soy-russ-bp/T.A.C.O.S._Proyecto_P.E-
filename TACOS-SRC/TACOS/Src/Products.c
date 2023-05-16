@@ -18,11 +18,11 @@ const ProductInfo* Products_GetProductInfo(size_t index) {
 	return &Products[index];
 }
 
-_Success_(OnTrueReturn) bool Products_TryGetByCode(SalExt_Str_In_NotNull_ TSTR code, _Out_ size_t* index, _Outptr_ const ProductInfo** productInfo) {
+_Success_(OnTrueReturn) bool Products_TryGetByCode(SalExt_Str_In_NotNull_ TSTR code, _Out_opt_ size_t* index, _Outptr_ const ProductInfo** productInfo) {
 	for (size_t productI = 0; productI < Products_TypesCount; productI++) {
 		const ProductInfo* product = &Products[productI];
 		if (TStrCmp(code, product->code) == 0) {
-			*index = productI;
+			if (index != NULL) *index = productI;
 			*productInfo = product;
 			return true;
 		}

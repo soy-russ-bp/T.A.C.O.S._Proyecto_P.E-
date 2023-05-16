@@ -17,4 +17,4 @@ extern const size_t Products_TypesCount;
 
 const ProductInfo* Products_GetProductInfo(size_t index);
 
-_Success_(OnTrueReturn) bool Products_TryGetByCode(SalExt_Str_In_NotNull_ TSTR code, _Out_ size_t* index, _Outptr_ const ProductInfo** productInfo);
+_Success_(OnTrueReturn) bool Products_TryGetByCode(SalExt_Str_In_NotNull_ TSTR code, _Out_opt_ size_t* index, _Outptr_ const ProductInfo** productInfo);
