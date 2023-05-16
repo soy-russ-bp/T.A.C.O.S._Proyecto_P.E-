@@ -63,23 +63,10 @@ static void PrintFieldRow(TSTR moneyFieldName, double moneyFieldValue, TSTR quan
 	ConsoleOut_NewLine();
 }
 
-static void PrintRow1(void) {
-	UINT openCount = Orders_GetOpenCount();
-	PrintFieldRow(_T("Subtotal"), 0, _T("Abiertas"), openCount);
-}
-
-static void PrintRow2(void) {
-	PrintFieldRow(_T("Propina"), 0, _T("Cerradas"), 0);
-}
-
-static void PrintRow3(void) {
-	PrintFieldRow(_T("Total"), 0, _T("Totales"), 0);
-}
-
 static void PrintTableData(void) {
-	PrintRow1();
-	PrintRow2();
-	PrintRow3();
+	PrintFieldRow(_T("Subtotal"), Orders_GetDaySubtotal(), _T("Abiertas"), Orders_GetOpenCount());
+	PrintFieldRow(_T("Propina"), Orders_GetDayTips(), _T("Cerradas"), Orders_GetTotalClosedCount());
+	PrintFieldRow(_T("Total"), Orders_GetDayTotal(), _T("Totales"), Orders_GetTotalOrderCount());
 }
 
 void DaySummary_PrintTable(void) {
