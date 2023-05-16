@@ -4,9 +4,9 @@
 #include "Action.h"
 
 // Tipo de opción.
-// TODO: Documentar tipos
 typedef enum OptionType {
 	OTReturn,
+	OTNone,
 	OTExit,
 	OTConfirmExit
 } OptionType;
