@@ -75,10 +75,14 @@ static void PrintMenuRow(size_t productI, SHORT rowI) {
 	);
 }
 
+static SHORT GetRowIndex(size_t productI) {
+	return (SHORT)(5 + (productI * 2));
+}
+
 static void HighlightMenuRow(size_t productI) {
 	COORD oldCursorPos = ConsoleCursor_GetPos();
 	ConsoleStyle oldStyle = ConsoleStyle_GetSet(BACKGROUND_GREEN | FOREGROUND_WHITE);
-	SHORT rowI = (SHORT)(5 + (productI * 2));
+	SHORT rowI = GetRowIndex(productI);
 	PrintMenuRow(productI, rowI);
 	ConsoleCursor_SetPos(oldCursorPos);
 	ConsoleStyle_Set(oldStyle);
@@ -94,7 +98,7 @@ static void PrintListRow(_In_opt_ OrderElement* orderElement) {
 		cellA = SF_Align(orderElement->product->name, 18, ALIGN_CENTER);
 		cellB = SF_AlignF(5, ALIGN_CENTER, _T("%d"), orderElement->count);
 	}
-	ConsoleOut_WriteFormat(_T("%s║%s"), cellA, cellB);
+	ConsoleOut_WriteFormat(_T("%s║%s║"), cellA, cellB);
 }
 
 static void PrintProductRow(_In_opt_ OrderElement* orderElement, size_t productI, SHORT rowI) {
@@ -115,6 +119,17 @@ static void PrintModifyOrderMenu(int tableNum, Table* table) {
 		PrintProductRow(orderElementData, productI, printRowI++);
 	}
 	PrintHorizontalSeparator(FooterSeparatorRowI);
+}
+
+static void HighlightListRow(size_t productI, OrderElement* orderElement) {
+	COORD oldCursorPos = ConsoleCursor_GetPos();
+	ConsoleStyle oldStyle = ConsoleStyle_GetSet(BACKGROUND_RED | FOREGROUND_WHITE);
+	SHORT rowI = GetRowIndex(productI);
+	ConsoleCursor_SetPos2(34, rowI);
+	ConsoleOut_WriteChar(L'║');
+	PrintListRow(orderElement);
+	ConsoleCursor_SetPos(oldCursorPos);
+	ConsoleStyle_Set(oldStyle);
 }
 
 static bool SelectOperationOptionHandler(OptionHandlerArgs) {
@@ -164,7 +179,6 @@ static bool AddProductOptionHandler(OptionHandlerArgs) {
 
 static bool RemoveProductOptionHandler(OptionHandlerArgs) {
 	WarnIgnore_UnusedVar(navAction);
-
 	AssertNotNull(extraInfo);
 	ModProductInfo* modProductInfo = ((ModProductInfo*)extraInfo);
 	LLOrder* selectedOrder = modProductInfo->selectedOrder;
@@ -172,13 +186,13 @@ static bool RemoveProductOptionHandler(OptionHandlerArgs) {
 	TSTR inputCode = optionInput.string;
 	if (TStrCmp(inputCode, _T("CCC")) == 0) return true;
 
-	size_t menuProdI;
 	const ProductInfo* menuProd = modProductInfo->selectedMenuProduct;
-	if (Products_TryGetByCode(inputCode, &menuProdI, &menuProd)) {
+	if (Products_TryGetByCode(inputCode, NULL, &menuProd)) {
 		void* menuProdAsInfo = WarnIgnore_CastDropQualifiers((void*)menuProd);
 		LLOrderNode* orderElement;
-		if (LLOrder_TryFind(selectedOrder, SearchForProduct, menuProdAsInfo, NULL, &orderElement)) {
-			//HighlightMenuRow(menuProdI);
+		size_t productI;
+		if (LLOrder_TryFind(selectedOrder, SearchForProduct, menuProdAsInfo, &productI, &orderElement)) {
+			HighlightListRow(productI, &orderElement->data);
 			modProductInfo->selectedProductToRemove = orderElement;
 			return true;
 		}
@@ -187,7 +201,6 @@ static bool RemoveProductOptionHandler(OptionHandlerArgs) {
 	}
 	*errorMsg = _T("Código invalido");
 	return false;
-	
 }
 
 static int ParseInt(TSTR string) {
@@ -233,15 +246,26 @@ static bool SelectRemoveAmountOptionHandler(OptionHandlerArgs) {
 	WarnIgnore_UnusedVar(navAction);
 	AssertNotNull(extraInfo);
 	ModProductInfo* modProductInfo = ((ModProductInfo*)extraInfo);
-	//LLOrder* selectedOrder = modProductInfo->selectedOrder;
 
 	TSTR inputAmount = optionInput.string;
-	int amount = _tcstol(inputAmount, NULL, 10);
+	if (TStrCmp(inputAmount, _T("CC")) == 0) return true;
+	int amount = ParseInt(inputAmount);
+	if (amount == 0) {
+		*errorMsg = _T("Cantidad invalida");
+		return false;
+	}
 
 	LLOrderNode* prodToRemove = modProductInfo->selectedProductToRemove;
-	if ((int)prodToRemove->data.count - amount < 0) {
-		*errorMsg = _T("No se puede remover más productos de los que hay.");
+	int newAmount = (int)prodToRemove->data.count - amount;
+	if (newAmount < 0) {
+		*errorMsg = _T("No se puede remover más productos de los que hay");
 		return false;
+	}
+	if (newAmount == 0) {
+		LLOrder* selectedOrder = modProductInfo->selectedOrder;
+		LLOrder_RemoveNode(selectedOrder, prodToRemove);
+	} else {
+		prodToRemove->data.count = (size_t)newAmount;
 	}
 	return true;
 }
@@ -254,6 +278,11 @@ static void GetContextOptionHandlers(ModOperation modOperation, OptionHandler** 
 		*operationOptionHandler = RemoveProductOptionHandler;
 		*selectAmountOptionHandler = SelectRemoveAmountOptionHandler;
 	}
+}
+
+static bool CanceledInContext(ModOperation modOperation, ModProductInfo* modProductInfo) {
+	if (modOperation == MOAdd) return modProductInfo->selectedMenuProduct == NULL;
+	return modProductInfo->selectedProductToRemove == NULL;
 }
 
 void ModifyOrder_Menu(void) {
@@ -273,13 +302,14 @@ void ModifyOrder_TryTansferToMenu(int selectedTable) {
 				return;
 			case MOAdd: case MORemove:
 				TCHAR inputBuf[ProductCodeBufSize];
-				ModProductInfo selectedMenuProduct = { 0 };
-				selectedMenuProduct.selectedOrder = table->orderList;
+				ModProductInfo modProductInfo = { 0 };
+				modProductInfo.selectedOrder = table->orderList;
 				OptionHandler* operationOptionHandler;
 				OptionHandler* selectAmountOptionHandler;
 				GetContextOptionHandlers(modOperation, &operationOptionHandler, &selectAmountOptionHandler);
-				HandleStrOptionsExtra(StaticArrayAndLength(inputBuf), &AddOrRemoveProductOptions, operationOptionHandler, &selectedMenuProduct);
-				HandleStrOptionsExtra(inputBuf, (size_t)(2 + 1), &SelectAmountOptions, selectAmountOptionHandler, &selectedMenuProduct);
+				HandleStrOptionsExtra(StaticArrayAndLength(inputBuf), &AddOrRemoveProductOptions, operationOptionHandler, &modProductInfo);
+				if (CanceledInContext(modOperation, &modProductInfo)) continue;
+				HandleStrOptionsExtra(inputBuf, (size_t)(2 + 1), &SelectAmountOptions, selectAmountOptionHandler, &modProductInfo);
 				break;
 			default:
 				Throw("Invalid mod operation");
