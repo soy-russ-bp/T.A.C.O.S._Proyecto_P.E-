@@ -15,10 +15,10 @@ typedef enum ModOperation {
 } ModOperation;
 
 static const TSTR AddOrRemoveProductOptionsList[] = { _T("~#Código de producto"), _T("~#CCC (Cancelar)") };
-static const OptionGroup AddOrRemoveProductOptions = { StaticArrayAndLength(AddOrRemoveProductOptionsList), OTReturn };
+static const OptionGroup AddOrRemoveProductOptions = { StaticArrayAndLength(AddOrRemoveProductOptionsList), OTNone };
 
-static const TSTR SelectAmountOptionsList[] = { _T("~#Cant. de producto"), _T("~#CCC (Cancelar)") };
-static const OptionGroup SelectAmountOptions = { StaticArrayAndLength(SelectAmountOptionsList), OTReturn };
+static const TSTR SelectAmountOptionsList[] = { _T("~#Cant. de producto"), _T("~#CC (Cancelar)") };
+static const OptionGroup SelectAmountOptions = { StaticArrayAndLength(SelectAmountOptionsList), OTNone };
 
 #define ProductCodeLen (3)
 #define ProductCodeBufSize (ProductCodeLen + 1)
@@ -106,15 +106,13 @@ static void PrintProductRow(_In_opt_ OrderElement* orderElement, size_t productI
 static void PrintModifyOrderMenu(int tableNum, Table* table) {
 	PrintMenuHeader(tableNum, Orders_GetTableOrderTotal(table));
 	LLOrder* order = table->orderList;
-	LLOrderNode* orderElement = NULL;
-	bool orderEndReached = false;
+	LLOrderNode* orderElement = LL_IterateStart;
 	SHORT printRowI = 4;
 	for (size_t productI = 0; productI < Products_TypesCount; productI++) {
 		PrintHorizontalSeparator(printRowI++);
-		orderEndReached = orderEndReached || !LLOrder_Iterate(order, &orderElement);
+		LLOrder_Iterate(order, &orderElement);
 		OrderElement* orderElementData = (orderElement == NULL) ? NULL : &orderElement->data;
 		PrintProductRow(orderElementData, productI, printRowI++);
-		if (orderEndReached) orderElement = NULL;
 	}
 	PrintHorizontalSeparator(FooterSeparatorRowI);
 }
@@ -193,6 +191,10 @@ static bool RemoveProductOptionHandler(OptionHandlerArgs) {
 	
 }
 
+static int ParseInt(TSTR string) {
+	return _tcstol(string, NULL, 10);
+}
+
 static bool SelectAddAmountOptionHandler(OptionHandlerArgs) {
 	WarnIgnore_UnusedVar(navAction);
 	AssertNotNull(extraInfo);
@@ -200,20 +202,20 @@ static bool SelectAddAmountOptionHandler(OptionHandlerArgs) {
 	LLOrder* selectedOrder = modProductInfo->selectedOrder;
 
 	TSTR inputAmount = optionInput.string;
-	size_t amount = _tcstol(inputAmount, NULL, 10);
+	if (TStrCmp(inputAmount, _T("CC")) == 0) return true;
+	size_t amount = (size_t)ParseInt(inputAmount);
+	if (amount == 0) {
+		*errorMsg = _T("Cantidad invalida");
+		return false;
+	}
 
 	const ProductInfo* menuProd = modProductInfo->selectedMenuProduct;
 	void* menuProdAsInfo = WarnIgnore_CastDropQualifiers((void*)menuProd);
 
 	size_t amountTotal = amount;
 	LLOrderNode* orderElement = NULL;
-	if ((selectedOrder->count) > 0) {
-		LLOrder_TryFind(selectedOrder, SearchForProduct, menuProdAsInfo, NULL, &orderElement);
+	if ((selectedOrder->count) > 0 && LLOrder_TryFind(selectedOrder, SearchForProduct, menuProdAsInfo, NULL, &orderElement)) {
 		amountTotal += orderElement->data.count;
-	}
-	if (amount == 0) {
-		*errorMsg = _T("Cantidad invalida");
-		return false;
 	}
 	if (amountTotal > 25) {
 		*errorMsg = _T("Máx: 25");
@@ -257,6 +259,10 @@ static void GetContextOptionHandlers(ModOperation modOperation, OptionHandler** 
 
 void ModifyOrder_Menu(void) {
 	int selectedTable = TableSelection_Menu(true);
+	ModifyOrder_TryTansferToMenu(selectedTable);
+}
+
+void ModifyOrder_TryTansferToMenu(int selectedTable) {
 	if (selectedTable == 0) return;
 	Table* table = Orders_GetTableByNum((size_t)selectedTable);
 	do {
@@ -268,7 +274,7 @@ void ModifyOrder_Menu(void) {
 				return; // TODO: Confirm changes (if any)
 			case MOAdd: case MORemove:
 				TCHAR inputBuf[ProductCodeBufSize];
-				ModProductInfo selectedMenuProduct = {0};
+				ModProductInfo selectedMenuProduct = { 0 };
 				selectedMenuProduct.selectedOrder = table->orderList;
 				OptionHandler* operationOptionHandler;
 				OptionHandler* selectAmountOptionHandler;
