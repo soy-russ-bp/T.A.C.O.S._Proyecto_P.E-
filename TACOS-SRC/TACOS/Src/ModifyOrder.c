@@ -56,7 +56,7 @@ static void PrintHorizontalSeparator(SHORT rowI) {
 static void PrintMenuHeader(int tableNum, double total) {
 	PrintHorizontalSeparator(0);
 	ConsoleCursor_SetPos2(1, 1);
-	ConsoleOut_WriteFormat(_T("%s║╳╳║ Mesa #%d Total: %.2f"),
+	ConsoleOut_WriteFormat(_T("%s║╳╳║ Mesa #%d - $%.2f"),
 		SF_Align(_T("Menú"), 30, ALIGN_CENTER), tableNum, total
 	);
 	PrintHorizontalSeparator(2);
@@ -126,7 +126,6 @@ static bool SelectOperationOptionHandler(OptionHandlerArgs) {
 			AssertNotNull(extraInfo);
 			ModOperation operation = (option == 'A') ? MOAdd : MORemove;
 			*((ModOperation*)extraInfo) = operation;
-			// TODO: MORemove: prod count 0 (LLOrder)
 			return true;
 		case 'R':
 			return true;
@@ -271,7 +270,7 @@ void ModifyOrder_TryTansferToMenu(int selectedTable) {
 		HandleOptionsExtra(&SelectOperationOptions, SelectOperationOptionHandler, &modOperation);
 		switch (modOperation) {
 			case MOExit:
-				return; // TODO: Confirm changes (if any)
+				return;
 			case MOAdd: case MORemove:
 				TCHAR inputBuf[ProductCodeBufSize];
 				ModProductInfo selectedMenuProduct = { 0 };
