@@ -5,7 +5,8 @@
 #include "OrderList.h"
 #include "WarnIgnore.h"
 
-#define TableCount 8
+#define TipPercentage (8)
+#define TableCount (8)
 #define LastTableI (TableCount - 1)
 #define TableOccupiedColor BACKGROUND_RED
 #define TableAvailableColor BACKGROUND_GREEN
@@ -18,8 +19,23 @@ typedef struct Table {
 } Table;
 WarnIgnore_AddedPadding_E
 
+// Obtiene el subtotal del día (no incluye propina).
+double Orders_GetDaySubtotal(void);
+
+// Obtiene la propina del día.
+double Orders_GetDayTips(void);
+
+// Obtiene el total del día (subtotal + propina).
+double Orders_GetDayTotal(void);
+
+// Obtiene el total de ordenes que se han abierto.
+UINT Orders_GetTotalOrderCount(void);
+
 // Obtiene la cantidad de ordenes abiertas actualmente.
 UINT Orders_GetOpenCount(void);
+
+// Obtiene el total de ordenes que se han cerrado.
+UINT Orders_GetTotalClosedCount(void);
 
 // Obtiene la mesa en base a su indice.
 Table* Orders_GetTableByIndex(size_t tableI);
@@ -38,6 +54,9 @@ double Orders_GetTableOrderTotal(_In_ Table* table);
 
 // Obtiene el color para una mesa en base a su disponibilidad.
 ConsoleStyle Orders_GetTableStatusColor(_In_ Table* table);
+
+// Obtiene la cantidad de propina en base al valor de {TipPercentage}.
+double Orders_GetTipAmount(double subtotal);
 
 // Cierra una mesa.
 void Orders_CloseTable(_Inout_ Table* table);
